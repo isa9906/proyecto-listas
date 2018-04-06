@@ -63,18 +63,53 @@ class Lista {
 			añadir_fin(dato);
 		}
 		else if( posicion==0){
-			añadir_inicio(dato;)
+			añadir_inicio(dato);
+		}
+		else{		
+			for (i=0;i<posicion; i++){
+			}
+		
+		}
+	}
+	void eliminar_final(T dato){
+		nodo <T> *b;//creando un nodo 
+		//b= new nodo <T>;//separando memoria
+		
+		if(!lista_vacia){
+			b=cabeza;
+			for (i=1;i<tam-1; i++){
+				b=b->sig;
+		}
+		delete fin;
+		fin=b;
+		tam--;	
+		}
+	}
+	void eliminar_posicion(T dato,int posicion){
+		if (posicion>=tam){
+			eliminar_fin(dato);
+		}
+		else if( posicion==0){
+			eliminar_inicio(dato);
 		}
 		else{
-					
-				
-			for (i=0;i<posicion; i++){
-				
-		
-			
+			nodo <T> *b;//creando un nodo 
+			nodo <T> *c;//creando un nodo 
+			//b= new nodo <T>;//separando memoria
+							
+			if(!lista_vacia){
+				b=cabeza;
+				c=cabeza;
+				for (i=0;i<posicion-1; i++){
+					b=b->sig;
+				}
+				for (i=1;i<posicion-1; i++){
+					c=c->sig;
+				}
+				b->sig=c->sig;
+				delete c;
+			}
 		}
-		
-		
-		
-	}				
+		tam--;
+	}
 };
