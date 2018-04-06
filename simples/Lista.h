@@ -10,8 +10,6 @@ struct nodo {
 template <class T>
 class Lista {
 	//estructura de datos donde x es el dato a guardar y sig es la posicion a la que apunta despues
-
-	
 	nodo<T> *cab;
 	nodo<T> *fin;
 	int tam;
@@ -89,6 +87,7 @@ class Lista {
 				b->x = dato;
 				b->sig = actual;
 				anterior-> sig = b;
+				tam++;
 			}
 		}
 	
@@ -98,8 +97,9 @@ class Lista {
 				nodo<T> *b;
 				b = cab;
 				cab = cab -> sig;
-				//delete *b; //Dudas
+				delete b;
 			}
+			tam--;
 			return 1;
 		}
 		//si la lista está vacía, retornará 0, sino retorna 1
@@ -127,57 +127,59 @@ class Lista {
 					}
 				}
 				b->x = valorNuevo;
-				//delete b;
 			}
 			return 1;
 		}
 	
-	void eliminar_final(T dato){
+	void eliminar_final(){
 		nodo <T> *b;//creando un nodo 
 		//b= new nodo <T>;//separando memoria
-		if(!lista_vacia){
+		if(!lista_vacia()){
 			b=cab;
 			int i;
 			for (i=1;i<tam-1; i++){
 				b=b->sig;
 		}
-		//delete fin;
+		delete fin;
 		fin=b;
 		tam--;	
 		}
 	}
-	void eliminar_posicion(T dato,int posicion){
-		if (posicion>=tam){
-			eliminar_fin(dato);
+	void eliminar_posicion(int posicion){
+		if (posicion>=tam-1){
+			eliminar_final();
 		}
 		else if( posicion==0){
-			eliminar_inicio(dato);
+			eliminarInicio();
 		}
 		else{
 			nodo <T> *b;//creando un nodo 
 			nodo <T> *c;//creando un nodo 
 			//b= new nodo <T>;//separando memoria
 							
-			if(!lista_vacia){
+			if(!lista_vacia()){
 				b=cab;
 				c=cab;
 				int i;
-				for (i=0;i<posicion-1; i++){
+				for (i=0;i<posicion; i++){
 					b=b->sig;
 				}
-				for (i=1;i<posicion-1; i++){
+				for (i=1;i<posicion; i++){
 					c=c->sig;
 				}
-				b->sig=c->sig;
+				//b->sig=c->sig;
+				c->sig = b->sig;
+				delete b;
 				//delete c;
+				tam--;
 			}
 		}
-		tam--;
+		
 	}
 
 	T devolverDato(int posicion){
-			if(lista_vacia()) return 0;
-			else if(posicion==0){
+			//if(lista_vacia()) return 0;
+			if(posicion==0){
 				return cab->x;
 			}
 			else if(posicion>=(tam-1)){
@@ -201,7 +203,6 @@ class Lista {
 				return b->x;
 				//delete b;
 			}
-			return 1;
 		}
 		
 	int getTam(){
