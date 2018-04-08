@@ -1,14 +1,17 @@
+#include <stddef.h>
 template <class T>
 
+struct nodo {
+	T x;
+	nodo <T> *sig;
+};
+
+
+template <class T>
 class Lista {
 	//estructura de datos donde x es el dato a guardar y sig es la posicion a la que apunta despues
-	struct nodo {
-		T x;
-		nodo <T> *sig;
-	};
-	
-	T *cab;
-	T *fin;
+	nodo<T> *cab;
+	nodo<T> *fin;
 	int tam;
 	
 	public:
@@ -27,50 +30,48 @@ class Lista {
 			}
 		}
 		//añade un dato al final de la lista
-		void añadir_final(T dato){
+		void anadir_final(T dato){
 			nodo <T> *b;//creando un nodo 
 			b= new nodo <T>;//separando memoria
 			b->x=dato;//llenando la info con el dato dado
 			b->sig= NULL;//no apunta a nada
-			//mueve el apuntador de la cabeza y del fin
-			if(lista_vacia){
-				cabeza=fin=b;
+			//mueve el apuntador de la cab y del fin
+			if(lista_vacia()){
+				cab=fin=b;
 			}
 			else{
 				fin->sig=b;
 				fin=b;
 			}
 			tam++;
-			delete b;
 		}
-		void añadir_inicio(T dato){
+		void anadir_inicio(T dato){
 			nodo <T> *b;//creando un nodo 
 			b= new nodo <T>;//separando memoria
 			b->x=dato;//llenando la info con el dato dado
 			b->sig= NULL;//no apunta a nada
-			//mueve el apuntador de la cabeza y del fin
-			if(lista_vacia){
-				cabeza=fin=b;
+			//mueve el apuntador de la cab y del fin
+			if(lista_vacia()){
+				cab=fin=b;
 			}
 			else{
-				b->sig=cabeza;
-				cabeza=b;
+				b->sig=cab;
+				cab=b;
 			}
 			tam++;
-			delete b;
 		}
-		void añadir_posicion (T dato, int posicion){
+		void anadir_posicion (T dato, int posicion){
 			if(posicion==0){
-				añadir_inicio(dato);
+				anadir_inicio(dato);
 			}
 			else if(posicion>=(tam-1)){
-				añadir_final(dato);
+				anadir_final(dato);
 			}
 			else{
 				nodo<T> *anterior, *actual;
 				int contador = 1;
-				actual = cabeza->sig;
-				anterior = cabeza;
+				actual = cab->sig;
+				anterior = cab;
 				while(true){
 					if(contador==posicion){
 						break;
@@ -86,30 +87,29 @@ class Lista {
 				b->x = dato;
 				b->sig = actual;
 				anterior-> sig = b;
-				delete anterior;
-				delete actual;
-				delete b;
+				tam++;
 			}
 		}
 	
 		int eliminarInicio(){
-			if(listaVacia()) return 0;
+			if(lista_vacia()) return 0;
 			else{
 				nodo<T> *b;
-				b = cabeza;
-				cabeza = cabeza -> sig;
-				delete *b; //Dudas
+				b = cab;
+				cab = cab -> sig;
+				delete b;
 			}
+			tam--;
 			return 1;
 		}
 		//si la lista está vacía, retornará 0, sino retorna 1
 		int modificar(T valorNuevo, int posicion){
-			if(listaVacia()) return 0;
+			if(lista_vacia()) return 0;
 			else if(posicion==0){
-				cabeza->x = valorNuevo;
+				cab->x = valorNuevo;
 			}
 			else if(posicion>=(tam-1)){
-				fin->x = valorNuevo
+				fin->x = valorNuevo;
 			}
 			else{
 				nodo<T> *b;
@@ -127,16 +127,16 @@ class Lista {
 					}
 				}
 				b->x = valorNuevo;
-				delete b;
 			}
 			return 1;
 		}
-	}
-	void eliminar_final(T dato){
+	
+	void eliminar_final(){
 		nodo <T> *b;//creando un nodo 
 		//b= new nodo <T>;//separando memoria
-		if(!lista_vacia){
-			b=cabeza;
+		if(!lista_vacia()){
+			b=cab;
+			int i;
 			for (i=1;i<tam-1; i++){
 				b=b->sig;
 		}
@@ -145,44 +145,67 @@ class Lista {
 		tam--;	
 		}
 	}
-	void eliminar_posicion(T dato,int posicion){
-		if (posicion>=tam){
-			eliminar_fin(dato);
+	void eliminar_posicion(int posicion){
+		if (posicion>=tam-1){
+			eliminar_final();
 		}
 		else if( posicion==0){
-			eliminar_inicio(dato);
+			eliminarInicio();
 		}
 		else{
 			nodo <T> *b;//creando un nodo 
 			nodo <T> *c;//creando un nodo 
 			//b= new nodo <T>;//separando memoria
 							
-			if(!lista_vacia){
-				b=cabeza;
-				c=cabeza;
-				for (i=0;i<posicion-1; i++){
+			if(!lista_vacia()){
+				b=cab;
+				c=cab;
+				int i;
+				for (i=0;i<posicion; i++){
 					b=b->sig;
 				}
-				for (i=1;i<posicion-1; i++){
+				for (i=1;i<posicion; i++){
 					c=c->sig;
 				}
-				b->sig=c->sig;
-				delete c;
+				//b->sig=c->sig;
+				c->sig = b->sig;
+				delete b;
+				//delete c;
+				tam--;
 			}
 		}
-		tam--;
+		
 	}
 
-	/*void imprimir(){
-			nodo<T> *b;
-			b = cab;
-			while(true){
-				cout<<b->x<<" ";
-				if(b->sig == NULL) break;
-				else{
-					b = b -> sig;
-				}
-				
+	T devolverDato(int posicion){
+			//if(lista_vacia()) return 0;
+			if(posicion==0){
+				return cab->x;
 			}
-		}*/
+			else if(posicion>=(tam-1)){
+				return fin->x;
+			}
+			else{
+				nodo<T> *b;
+				int contador;
+				b = new nodo<T>;
+				b = cab->sig;
+				contador = 1;
+				while(true){
+					if(contador==posicion){
+						break;
+					}
+					else{
+						contador++;
+						b = b -> sig;
+					}
+				}
+				return b->x;
+				//delete b;
+			}
+		}
+		
+	int getTam(){
+		return tam;
+	}	
 };
