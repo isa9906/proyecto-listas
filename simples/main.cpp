@@ -7,6 +7,21 @@ struct estud{
 	char *nombre;
 };
 
+//plantilla para imprimir la lista
+template <class T>
+void imprimir (Lista <T> var){
+	int i;
+	for(i=0;i<var.getTam();i++)
+		cout<<var.devolverDato(i).cod<<" "<<var.devolverDato(i).nombre<<endl;
+			cout<<endl<<endl;
+}
+template <class T>
+void imprimir2 (Lista <T> var){
+	int i;
+		for(i=0;i<var.getTam();i++)
+		cout<<var.devolverDato(i)<<" ";
+			cout<<endl<<endl;
+}
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 using namespace std;
@@ -16,8 +31,9 @@ int main(int argc, char** argv) {
 	Lista<estud> var;
 	Lista<int> varInt;
 	Lista<float> varFloat;
-	//Lista de estudiantes
-	cout<<"Lista de estudiantes";
+  
+//seccion de uso de listas de estructuras
+  cout<<"Lista de estudiantes";
 	estud estud1;
 	estud1.cod = 20161020029;
 	estud1.nombre = "Andres Arias";
@@ -37,19 +53,48 @@ int main(int argc, char** argv) {
 	estud6.cod = 20161020067;
 	estud6.nombre = "Cristian Mora";
 
+	//añadiendo datos
 	var.anadir_inicio(estud4);
 	var.anadir_final(estud1);
 	var.anadir_posicion(estud6,2);
-	var.anadir_inicio(estud2);
-	var.anadir_posicion(estud3,4);
-	var.anadir_posicion(estud5,6);
+
+	//miremos como esta la lista
+	imprimir (var);
+	//eliminando inicio
 	var.eliminarInicio();
+	//miremos como esta la lista
+	imprimir (var);
+	//añadiendo	
+	var.anadir_inicio(estud3);
+	var.anadir_final(estud2);
+	var.anadir_posicion(estud5,2);
+	//miremos como esta la lista
+	imprimir (var);	
+	//eliminando
+	var.eliminar_posicion(2);
+	//miremos como esta la lista
+	imprimir (var);	
+	//añadiendo
+	var.anadir_inicio(estud6);
+	var.anadir_final(estud1);
+	var.anadir_posicion(estud4,3);
+	//miremos como esta la lista
+	imprimir(var);
+	//eliminando
 	var.eliminar_final();
+	//miremos como esta la lista
+	imprimir(var);
+	//eliminando	
+
+	var.eliminarInicio();
+	//miremos como esta la lista
+	imprimir(var);	
+	var.eliminar_final();
+	//miremos como esta la lista
+	imprimir(var);	
 	var.eliminar_posicion(3);
-	
-	cout<<endl<<endl;
-	for(i=0;i<var.getTam();i++)
-		cout<<var.devolverDato(i).cod<<" "<<var.devolverDato(i).nombre<<endl;
+  //miremos como esta la lista
+	imprimir(var);	
 	
 	//Lista de enteros
 	cout<<endl<<endl;
@@ -69,8 +114,8 @@ int main(int argc, char** argv) {
 	varInt.eliminar_posicion(3);
 	
 	//Imprimiendo lista
-	for(i=0;i<varInt.getTam();i++)
-		cout<<varInt.devolverDato(i)<<endl;
+	
+  imprimir2(varInt);
 	cout<<endl<<endl;
 	
 	//Lista de flotantes
@@ -91,10 +136,58 @@ int main(int argc, char** argv) {
 	varFloat.eliminar_posicion(3);
 	
 	//Imprimiendo lista
-	for(i=0;i<varFloat.getTam();i++)
-		cout<<varFloat.devolverDato(i)<<endl;
+	imprimir2(varFloat);
 	cout<<endl<<endl;
+
+
+// seccion de uso de listas de estructuras
+	Lista<char> chars;
+	char char1 = 'I';
+	char char2=  'S';
+	char char3= 'A';
+	char char4= 'B';
+	char char5= 'E';
+	char char6= 'L';
+
+	//añadiendo datos
+	chars.anadir_inicio(char4);
+	chars.anadir_final(char1);
+	chars.anadir_posicion(char6,2);
+	//miremos como esta la lista
+	imprimir2 (chars);
+	//eliminando inicio
+	chars.eliminarInicio();
+	//miremos como esta la lista
+	imprimir2 (chars);
+	//añadiendo	
+	chars.anadir_inicio(char3);
+	chars.anadir_final(char2);
+	chars.anadir_posicion(char5,2);
+	//miremos como esta la lista
+	imprimir2 (chars);	
+	//eliminando
+	chars.eliminar_posicion(2);
+	//miremos como esta la lista
+	imprimir2 (chars);	
+	//añadiendo
+	chars.anadir_inicio(char6);
+	chars.anadir_final(char1);
+	chars.anadir_posicion(char4,3);
+	//miremos como esta la lista
+	imprimir2(chars);
+	//eliminando
+	chars.eliminar_final();
+	//miremos como esta la lista
+	imprimir2(chars);
+	//eliminando	
+	chars.eliminarInicio();
+	//miremos como esta la lista
+	imprimir2(chars);	
+	chars.eliminar_final();
+	//miremos como esta la lista
+	imprimir2(chars);	
+	chars.eliminar_posicion(3);
+	//miremos como esta la lista
+	imprimir2(chars);	
 }
-
-
 
