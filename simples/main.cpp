@@ -7,10 +7,6 @@ struct estud{
 	char *nombre;
 };
 
-
-/* run this program using the console pauser or add your own getch, system("pause") or input loop */
-using namespace std;
-
 //plantilla para imprimir la lista
 template <class T>
 void imprimir (Lista <T> var){
@@ -27,13 +23,17 @@ void imprimir2 (Lista <T> var){
 			cout<<endl<<endl;
 }
 
-int main(int argc, char** argv) {	
-	
-	
-	
-//seccion de uso de listas de estructuras
-	//Creando estudiantes
+/* run this program using the console pauser or add your own getch, system("pause") or input loop */
+using namespace std;
+int main(int argc, char** argv) {
+	//Variables
+	int  i;
 	Lista<estud> var;
+	Lista<int> varInt;
+	Lista<float> varFloat;
+  
+//seccion de uso de listas de estructuras
+  cout<<"Lista de estudiantes";
 	estud estud1;
 	estud1.cod = 20161020029;
 	estud1.nombre = "Andres Arias";
@@ -53,17 +53,18 @@ int main(int argc, char** argv) {
 	estud6.cod = 20161020067;
 	estud6.nombre = "Cristian Mora";
 
-	//añadiendo datos
+	//aÃ±adiendo datos
 	var.anadir_inicio(estud4);
 	var.anadir_final(estud1);
 	var.anadir_posicion(estud6,2);
+
 	//miremos como esta la lista
 	imprimir (var);
 	//eliminando inicio
 	var.eliminarInicio();
 	//miremos como esta la lista
 	imprimir (var);
-	//añadiendo	
+	//aÃ±adiendo	
 	var.anadir_inicio(estud3);
 	var.anadir_final(estud2);
 	var.anadir_posicion(estud5,2);
@@ -73,7 +74,7 @@ int main(int argc, char** argv) {
 	var.eliminar_posicion(2);
 	//miremos como esta la lista
 	imprimir (var);	
-	//añadiendo
+	//aÃ±adiendo
 	var.anadir_inicio(estud6);
 	var.anadir_final(estud1);
 	var.anadir_posicion(estud4,3);
@@ -84,6 +85,7 @@ int main(int argc, char** argv) {
 	//miremos como esta la lista
 	imprimir(var);
 	//eliminando	
+
 	var.eliminarInicio();
 	//miremos como esta la lista
 	imprimir(var);	
@@ -91,8 +93,52 @@ int main(int argc, char** argv) {
 	//miremos como esta la lista
 	imprimir(var);	
 	var.eliminar_posicion(3);
-	//miremos como esta la lista
+  //miremos como esta la lista
 	imprimir(var);	
+	
+	//Lista de enteros
+	cout<<endl<<endl;
+	cout<<"LISTA DE ENTEROS";
+	cout<<endl<<endl;
+	varInt.anadir_inicio(90);
+	varInt.anadir_final(78);
+	varInt.anadir_posicion(80,2);
+	varInt.eliminar_posicion(varInt.getTam()/2); //Nueva
+	varInt.anadir_inicio(0);
+	varInt.anadir_posicion(14,4);
+	varInt.anadir_posicion(35,6);
+	varInt.eliminar_final();  //Nueva
+	varInt.anadir_final(87);  //Nueva
+	varInt.eliminarInicio();
+	varInt.eliminar_final();
+	varInt.eliminar_posicion(3);
+	
+	//Imprimiendo lista
+	
+  imprimir2(varInt);
+	cout<<endl<<endl;
+	
+	//Lista de flotantes
+	cout<<endl<<endl;
+	cout<<"LISTA DE FLOTANTES";
+	cout<<endl<<endl;
+	varFloat.anadir_inicio(90.8);
+	varFloat.anadir_final(78.06);
+	varFloat.anadir_posicion(80.7,2);
+	varFloat.eliminar_posicion(varFloat.getTam()/2); //Nueva
+	varFloat.anadir_inicio(0.08);
+	varFloat.anadir_posicion(14.32,4);
+	varFloat.anadir_posicion(35.097,6);
+	varFloat.eliminar_final(); //Nueva
+	varFloat.anadir_final(87.123); //Nueva
+	varFloat.eliminarInicio();
+	varFloat.eliminar_final();
+	varFloat.eliminar_posicion(3);
+	
+	//Imprimiendo lista
+	imprimir2(varFloat);
+	cout<<endl<<endl;
+
 
 // seccion de uso de listas de estructuras
 	Lista<char> chars;
@@ -103,7 +149,7 @@ int main(int argc, char** argv) {
 	char char5= 'E';
 	char char6= 'L';
 
-	//añadiendo datos
+	//aÃ±adiendo datos
 	chars.anadir_inicio(char4);
 	chars.anadir_final(char1);
 	chars.anadir_posicion(char6,2);
@@ -113,7 +159,7 @@ int main(int argc, char** argv) {
 	chars.eliminarInicio();
 	//miremos como esta la lista
 	imprimir2 (chars);
-	//añadiendo	
+	//aÃ±adiendo	
 	chars.anadir_inicio(char3);
 	chars.anadir_final(char2);
 	chars.anadir_posicion(char5,2);
@@ -123,7 +169,7 @@ int main(int argc, char** argv) {
 	chars.eliminar_posicion(2);
 	//miremos como esta la lista
 	imprimir2 (chars);	
-	//añadiendo
+	//aÃ±adiendo
 	chars.anadir_inicio(char6);
 	chars.anadir_final(char1);
 	chars.anadir_posicion(char4,3);
@@ -143,10 +189,5 @@ int main(int argc, char** argv) {
 	chars.eliminar_posicion(3);
 	//miremos como esta la lista
 	imprimir2(chars);	
-
 }
-
-
-
-
 
