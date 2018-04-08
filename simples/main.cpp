@@ -11,8 +11,12 @@ struct estud{
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 using namespace std;
 int main(int argc, char** argv) {
+	//Variables
+	int  i;
 	Lista<estud> var;
-	//Creando estudiantes
+	Lista<int> varInt;
+	Lista<float> varFloat;
+	//Lista de estudiantes
 	estud estud1;
 	estud1.cod = 20161020029;
 	estud1.nombre = "Andres Arias";
@@ -39,7 +43,7 @@ int main(int argc, char** argv) {
 	var.anadir_posicion(estud3,4);
 	var.anadir_posicion(estud5,6);
 	
-	int  i;
+	
 	for(i=0;i<var.getTam();i++)
 		cout<<var.devolverDato(i).cod<<" "<<var.devolverDato(i).nombre<<endl;
 		
@@ -50,6 +54,52 @@ int main(int argc, char** argv) {
 	cout<<endl<<endl;
 	for(i=0;i<var.getTam();i++)
 		cout<<var.devolverDato(i).cod<<" "<<var.devolverDato(i).nombre<<endl;
+	
+	//Lista de enteros
+	cout<<endl<<endl;
+	cout<<"LISTA DE ENTEROS";
+	cout<<endl<<endl;
+	varInt.anadir_inicio(90);
+	varInt.anadir_final(78);
+	varInt.anadir_posicion(80,2);
+	varInt.eliminar_posicion(varInt.getTam()/2); //Nueva
+	varInt.anadir_inicio(0);
+	varInt.anadir_posicion(14,4);
+	varInt.anadir_posicion(35,6);
+	varInt.eliminar_final();  //Nueva
+	varInt.anadir_final(87);  //Nueva
+	
+	//Imprimiendo lista
+	// imprimirLista(i,vavarInt.rInt);
+	for(i=0;i<varInt.getTam();i++)
+		cout<<varInt.devolverDato(i)<<endl;
+	cout<<endl<<endl;
+	
+	//Lista de flotantes
+	cout<<endl<<endl;
+	cout<<"LISTA DE FLOTANTES";
+	cout<<endl<<endl;
+	var.anadir_inicio(90.8);
+	var.anadir_final(78.06);
+	var.anadir_posicion(80.7,2);
+	eliminar_posicion(varInt.getTam()/2); //Nueva
+	var.anadir_inicio(0,08);
+	var.anadir_posicion(14,32,4);
+	var.anadir_posicion(35,097,6);
+	eliminar_final(); //Nueva
+	anadir_final(87,123); //Nueva
+	
+	//Imprimiendo lista
+	for(i=0;i<var.getTam();i++)
+		cout<<var.devolverDato(i)<<endl;
+	cout<<endl<<endl;
+}
+
+//Para imprimir listas de enteros y flotantes
+void imprimirLista(int i,Lista<T> var){
+	for(i=0;i<var.getTam();i++)
+		cout<<var.devolverDato(i)<<endl;
+	cout<<endl<<endl;
 }
 
 
