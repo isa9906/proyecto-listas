@@ -17,6 +17,7 @@ int main(int argc, char** argv) {
 	Lista<int> varInt;
 	Lista<float> varFloat;
 	//Lista de estudiantes
+	cout<<"Lista de estudiantes";
 	estud estud1;
 	estud1.cod = 20161020029;
 	estud1.nombre = "Andres Arias";
@@ -42,11 +43,6 @@ int main(int argc, char** argv) {
 	var.anadir_inicio(estud2);
 	var.anadir_posicion(estud3,4);
 	var.anadir_posicion(estud5,6);
-	
-	
-	for(i=0;i<var.getTam();i++)
-		cout<<var.devolverDato(i).cod<<" "<<var.devolverDato(i).nombre<<endl;
-		
 	var.eliminarInicio();
 	var.eliminar_final();
 	var.eliminar_posicion(3);
@@ -68,9 +64,11 @@ int main(int argc, char** argv) {
 	varInt.anadir_posicion(35,6);
 	varInt.eliminar_final();  //Nueva
 	varInt.anadir_final(87);  //Nueva
+	varInt.eliminarInicio();
+	varInt.eliminar_final();
+	varInt.eliminar_posicion(3);
 	
 	//Imprimiendo lista
-	// imprimirLista(i,vavarInt.rInt);
 	for(i=0;i<varInt.getTam();i++)
 		cout<<varInt.devolverDato(i)<<endl;
 	cout<<endl<<endl;
@@ -79,27 +77,24 @@ int main(int argc, char** argv) {
 	cout<<endl<<endl;
 	cout<<"LISTA DE FLOTANTES";
 	cout<<endl<<endl;
-	var.anadir_inicio(90.8);
-	var.anadir_final(78.06);
-	var.anadir_posicion(80.7,2);
-	eliminar_posicion(varInt.getTam()/2); //Nueva
-	var.anadir_inicio(0,08);
-	var.anadir_posicion(14,32,4);
-	var.anadir_posicion(35,097,6);
-	eliminar_final(); //Nueva
-	anadir_final(87,123); //Nueva
+	varFloat.anadir_inicio(90.8);
+	varFloat.anadir_final(78.06);
+	varFloat.anadir_posicion(80.7,2);
+	varFloat.eliminar_posicion(varFloat.getTam()/2); //Nueva
+	varFloat.anadir_inicio(0.08);
+	varFloat.anadir_posicion(14.32,4);
+	varFloat.anadir_posicion(35.097,6);
+	varFloat.eliminar_final(); //Nueva
+	varFloat.anadir_final(87.123); //Nueva
+	varFloat.eliminarInicio();
+	varFloat.eliminar_final();
+	varFloat.eliminar_posicion(3);
 	
 	//Imprimiendo lista
-	for(i=0;i<var.getTam();i++)
-		cout<<var.devolverDato(i)<<endl;
+	for(i=0;i<varFloat.getTam();i++)
+		cout<<varFloat.devolverDato(i)<<endl;
 	cout<<endl<<endl;
 }
 
-//Para imprimir listas de enteros y flotantes
-void imprimirLista(int i,Lista<T> var){
-	for(i=0;i<var.getTam();i++)
-		cout<<var.devolverDato(i)<<endl;
-	cout<<endl<<endl;
-}
 
 
