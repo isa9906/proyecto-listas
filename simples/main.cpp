@@ -7,6 +7,8 @@ struct estud{
 	char *nombre;
 };
 
+using namespace std;
+
 //plantilla para imprimir la lista
 template <class T>
 void imprimir (Lista <T> var){
@@ -24,7 +26,7 @@ void imprimir2 (Lista <T> var){
 }
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
-using namespace std;
+
 int main(int argc, char** argv) {
 	//Variables
 	int  i;
