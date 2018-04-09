@@ -91,21 +91,16 @@ class Lista {
 			}
 		}
 	
-		int eliminarInicio(){
-			if(lista_vacia()) return 0;
-			else{
-				nodo<T> *b;
-				b = cab;
-				cab = cab -> sig;
-				delete b;
-			}
+		void eliminarInicio(){
+			nodo<T> *b;
+			b = cab;
+			cab = cab -> sig;
+			delete b;
 			tam--;
-			return 1;
 		}
-		//si la lista está vacía, retornará 0, sino retorna 1
-		int modificar(T valorNuevo, int posicion){
-			if(lista_vacia()) return 0;
-			else if(posicion==0){
+
+		void modificar(T valorNuevo, int posicion){
+			if(posicion==0){
 				cab->x = valorNuevo;
 			}
 			else if(posicion>=(tam-1)){
@@ -128,7 +123,6 @@ class Lista {
 				}
 				b->x = valorNuevo;
 			}
-			return 1;
 		}
 	
 	void eliminar_final(){
