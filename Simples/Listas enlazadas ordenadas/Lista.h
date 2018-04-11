@@ -20,6 +20,8 @@ class Lista {
 	public:
 		//constructor
 		Lista(){
+			auxinicio = new nodo;
+			auxfin = new nodo;
 			cab=auxinicio;
 			auxinicio->sig=auxfin;
 			fin=auxfin;
@@ -47,8 +49,8 @@ class Lista {
 				actual = auxinicio->sig;
 				anterior = auxinicio;
 				int i;
-				for (i=0;i<tam; i++){
-					if(clave<actual->clave||actual->sig==auxfin){
+				for (i=0;i<=tam; i++){
+					if(clave<actual->clave||actual==auxfin){
 						b->sig=actual;
 						anterior->sig=b;
 						break;
@@ -164,7 +166,7 @@ class Lista {
 				return b->info;
 				//delete b;
 	}
-	char *devolverDato(int posicion){	
+	nodo *devolverDato(int posicion){	
 			//if(lista_vacia()) return 0;
 				nodo *b;
 				int contador;
@@ -180,7 +182,7 @@ class Lista {
 						b = b -> sig;
 					}
 				}
-				return b->info;
+				return b;
 				//delete b;
 	}
 	

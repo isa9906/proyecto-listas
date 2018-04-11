@@ -6,17 +6,17 @@ using namespace std;
 void imprimir (Lista var){
 	int i;
 		for(i=0;i<var.getTam();i++)
-		cout<<var.devolverDato(i)<<" ";
+		cout<<var.devolverDato(i)->clave<<" ";
 			cout<<endl<<endl;
 }
 int main(int argc, char** argv) {
 	Lista prueba;
-	prueba.anadir('c',"esto");
+	prueba.anadir('b',"esto");
 	prueba.anadir('a',"si");
-	prueba.anadir('b',"funciona");
-	prueba.eliminarInicio();
-	cout<<prueba.getTam()<<endl;
-	prueba.eliminar_final();
+	prueba.anadir('c',"funciona");
+	//prueba.eliminarInicio();
+	//cout<<prueba.getTam()<<endl;
+	//prueba.eliminar_final();
 	imprimir(prueba);
 	return 0;
 }
