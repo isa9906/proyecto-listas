@@ -3,7 +3,7 @@
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 using namespace std;
-//por el momento imprime la clave
+//Imprime clave e info
 void imprimir (Lista var){
 	int i;
 	nodo *b;
@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 	prueba.eliminar_clave('b'); //Eliminando por clave
 	imprimir(prueba);
 	cout<<prueba.buscar('a')->info<<endl<<endl; //Buscando por clave
-	prueba.modificar('a',"Primer elemento");
+	prueba.modificar('a',"Primer elemento"); //Modificando por clave
 	imprimir(prueba);
 	
 	return 0;
