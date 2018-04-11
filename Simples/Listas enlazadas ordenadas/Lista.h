@@ -66,7 +66,7 @@ class Lista {
 		
 		
 		
-		//aÃ±ade un dato al final de la lista
+		/*
 		
 		int eliminarInicio(){
 			if(lista_vacia()) 
@@ -80,12 +80,15 @@ class Lista {
 			}
 			tam--;
 			return 1;
-		}
+		}*/
 		
-		//si la lista estÃ¡ vacÃ­a, retornarÃ¡ 0, sino retorna 1
+		//si el proceso se lleva a cabo con éxito retornará 1
+		//si la lista está vacía retornará 0
+		//si la clave ingresada no se encuentra dentro de la lista, retornará -1
 		int modificar(char clave, char *nuevo){
 			if(lista_vacia()) return 0;
-			else{					
+			else if(buscar(clave)==NULL) return -1; //se verificar si la clave
+			else{					               //pertence a la lista
 				nodo *b;
 				int i;
 				b = new nodo;
@@ -100,7 +103,7 @@ class Lista {
 			}
 			return 1;
 		}
-	
+	/*
 	int eliminar_final(){
 		nodo *actual,*anterior;//creando un nodo
 		if (lista_vacia()) return 0;
@@ -118,11 +121,16 @@ class Lista {
 			}
 			tam--;
 		return 1;			
-		}
+		}*/
+	
+	//si el proceso se lleva a cabo con éxito retornará 1
+	//si la lista está vacía retornará 0
+	//si la clave ingresada no se encuentra dentro de la lista, retornará -1
 	int eliminar_clave(char clave){
 		nodo *actual,*anterior;//creando un nodo
 		if (lista_vacia()) return 0;
-		else{
+		else if(buscar(clave)==NULL) return -1; //se verificar si la clave
+		else{					               //pertence a la lista
 			anterior = auxinicio;
 			actual = auxinicio->sig;
 			
@@ -146,8 +154,9 @@ class Lista {
 	}
 		
 
-
-	char *buscar(char clave){
+	//se devuelve el nodo completo en donde se encuentra la clave buscada
+	//retornará NULL si la clave no está dentro de la lista
+	nodo *buscar(char clave){
 			//if(lista_vacia()) return 0;
 				nodo *b;
 				int contador;
@@ -156,14 +165,14 @@ class Lista {
 				contador = 0;
 				while(true){
 					if(b->clave==clave){
-						break;
+						return b;
 					}
 					else{
 						contador++;
 						b = b -> sig;
 					}
 				}
-				return b->info;
+				return NULL;
 				//delete b;
 	}
 	nodo *devolverDato(int posicion){	
