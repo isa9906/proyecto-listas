@@ -1,35 +1,29 @@
 #include <iostream>
-#include <string>
 #include "Lista.h"
 
-struct estud{
-	long long cod;
-	char *nombre;
-};
-
-using namespace std;
-
-
-
-void imprimir(Lista var){
-	int i;
-		for(i=0;i<var.getTam();i++)
-		cout<<var.devolverDato(i)<<" ";
-			cout<<endl<<endl;
-}
-
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
-
-int main(int argc, char** argv) {
-	//Variables
-	int  i;
-	Lista var;
-	var.insertar('b');
-	imprimir(var);
-	var.insertar('z');
-	imprimir(var);
-	var.insertar('a');
-	imprimir(var);
-	return 0;	
+using namespace std;
+//Imprime clave e info
+void imprimir (Lista var){
+	int i;
+	nodo *b;
+		for(i=0;i<var.getTam();i++){
+			b = var.devolverDato(i);
+			cout<<b->clave<<" "<<b->info<<endl;
+		}
+		cout<<endl<<endl;
 }
-
+int main(int argc, char** argv) {
+	Lista prueba;
+	prueba.anadir('b',"esto");
+	prueba.anadir('a',"si");
+	prueba.anadir('c',"funciona");
+	imprimir(prueba);
+	prueba.eliminar_clave('b'); //Eliminando por clave
+	imprimir(prueba);
+	cout<<prueba.buscar('a')->info<<endl<<endl; //Buscando por clave
+	prueba.modificar('a',"Primer elemento"); //Modificando por clave
+	imprimir(prueba);
+	
+	return 0;
+}
