@@ -1,28 +1,46 @@
 #include <string.h>
 #include <iostream>
+
 using namespace std;
+
 struct Persona {
 	char* nombre;
 	char* carrera;
 	char* hobby;
 	int edad;
-	
-	//edad de mayor a menor
+	int signombre,sigcarrera,sighobby,sigedad;
+};
+
+//edad de mayor a menor
 	//nombre de menor a mayor
 	//hobby insertar al comienzo
 	//carrera insertar al final
 	
-	int signombre,sigcarrera,sighobby,sigedad;
-};
+	/*
+	cabecera[0] -> nombre
+	cabecera[1] -> electronica
+	cabecera[2] -> catastral
+	cabecera[3] -> industrial
+	cabecera[4] -> sistemas
+	cabecera[5] -> danza
+	cabecera[6] -> natacion
+	cabecera[7] -> basket
+	cabecera[8] -> baseball
+	cabecera[9] -> edad
+	*/
+	
 class multilista {
 	private:
 		int *cabecera;
 		Persona *datos;
 		int tam;
 	public:	
-		multilista(int numPers){	
+		multilista(int numPers,int i){	
 			cabecera= new int [10];
-			datos=new Persona [numPers]; 
+			for(i=0;i<10;i++){
+				cabecera[i] = 0;
+			}
+			datos = new Persona [numPers]; 
 			tam=0;
 		}
 		void insertar(Persona persona){
@@ -65,13 +83,28 @@ class multilista {
 			}
 			else{
 				int anterior,actual;
-		
+				ordenarByNombre(persona.nombre,anterior,actual);
 			}
 			tam++;
 		}
+		
+		//retorna una lista de tipo char **
+		char **listarByNombre(int i){
+			int actual;
+			char **lista;
+			lista = new char*[tam];
+			actual = cabecera[0];
+			i = 0;
+			while(actual!=0){
+				lista[i] = datos[actual-1].nombre;
+				actual = datos[actual-1].signombre;
+				i++;
+			}
+			return lista;
+		}
 			
 			
-		void insertarNombre (char *nombre,int anterior,int actual){
+		void ordenarByNombre (char *nombre,int anterior,int actual){
 			anterior=-1;
 			actual=cabecera[0];
 			while(true){
@@ -79,7 +112,7 @@ class multilista {
 					datos[anterior-1].signombre=tam+1;
 					break;
 				}
-				else if(strcoll(nombre,datos[actual-1].nombre)==-1){
+				else if(strcoll(nombre,datos[actual-1].nombre)==1){
 					anterior=actual;
 					actual=datos[actual-1].signombre;
 				}
@@ -105,6 +138,9 @@ class multilista {
 				return true;
 			}
 			return false;
+		}
+		int getTam(){
+			return tam;
 		}
 };
 
