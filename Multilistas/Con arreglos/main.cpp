@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 #include "multilista.h"
 
 int menu(int opcion);
@@ -14,7 +15,7 @@ using namespace std;
 int main() {
 	int c=1,opcion=0,i,numPers=0;
 	while(c!=0){
-		while(!(numPers>0)){ //se valida que el número de personas sea mayor a cero
+		while(!(numPers>0)){ //se valida que el número de personas sea mayor a cero 
 			cout<<"Digite el numero de elementos de la lista: ";
 			cin>>numPers;
 			if(!(numPers>0)) cout<<"Dato erróneo, digítelo de nuevo";
@@ -80,11 +81,13 @@ int main() {
 		}
 		cout<<"Para repetir el menu digite cualquier tecla diferente de 0: ";
 		cin>>c;	
+		system("CLS");
 	}
 	
 }
 
 int menu(int opcion){
+	system("CLS");
 	cout<<endl<<"Digite una opcion"<<endl;
 	cout<<"1. Agregar persona"<<endl<<"2. Eliminar"<<endl<<"3. Listar por edad"
 	<<endl<<"4. Listar por nombre"<<endl<<"5. Listar por hobbie"<<endl<<"6. Listar por carrera"
