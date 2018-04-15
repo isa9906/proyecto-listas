@@ -62,6 +62,80 @@ class multilista {
 				}
 			}
 		}
+		//se ordena la multilista por edad, se declara privado
+		void ordenarByEdad (int edad,int anterior,int actual){
+			anterior=-1;
+			actual=cabecera[9];
+			while(true){
+				if(actual==0){ //insertar al final
+					datos[anterior-1].sigedad=indice+1;
+					break;
+				}
+				else if(edad<datos[actual-1].edad){
+					anterior=actual;
+					actual=datos[actual-1].sigedad;
+				}
+				else {
+					if (anterior==-1){ //agregar a la cabeza
+						datos[indice].sigedad = actual;
+						cabecera[9] = indice+1;
+					}
+					else{ //agregar entre medio
+						datos[anterior-1].sigedad= indice+1;
+						datos[indice].sigedad = actual;
+					}
+					break;
+				}
+			}
+		}
+		//se coloca el hobbie a la cabeza
+		void ordenarByHobbie(char *hobbie,int actual){
+			int cab;
+			if (strcoll(hobbie,"danza")==0){
+				cab = 5;
+			}
+			else if (strcoll(hobbie,"natacion")==0){
+				cab = 6;
+			}
+			else if (strcoll(hobbie,"basket")==0){
+				cab = 7;
+			}
+			else {//beisbol
+				cab = 8;
+			}
+			actual = cabecera[cab];
+			datos[indice].sighobby = actual;
+			cabecera[cab] = indice+1;
+		}
+		//se coloca la carrera al final
+		void ordenarByCarrera(char *carrera, int actual, int anterior){
+			int cab;
+			if (strcoll(carrera,"electronica")==0){
+				cab = 1;
+			}
+			else if (strcoll(carrera,"catastral")==0){
+				cab = 2;
+			}
+			else if (strcoll(carrera,"industrial")==0){
+				cab = 3;
+			}
+			else {//sistemas
+				cab = 4;
+			}
+			anterior = -1;
+			actual = cabecera[cab];
+			while(actual!=0){
+				anterior = actual;
+				actual = datos[indice].sigcarrera;
+			}
+			if(anterior=-1){ //se agrega a la cabeza porque no hay ninguna persona con esa carrera
+				cabecera[cab] = indice+1;
+			}
+			else{
+				datos[anterior-1].sigcarrera = indice+1;
+			}
+			
+		}
 	public:	
 		//Constructor
 		multilista(int numPers,int i){	
@@ -73,11 +147,14 @@ class multilista {
 			indice=0;
 		}
 		void insertar(Persona persona){
+			persona.signombre=0;
+			persona.sigcarrera=0;
+			persona.sighobby=0;
+			persona.sigedad=0;
 			datos[indice]=persona;	
 			if (estaVacia()){
 				//agregando nombre
 				cabecera[0]=1;
-				persona.signombre=0;
 				//agregando carrera
 				if (strcoll(persona.carrera,"electronica")==0){
 					cabecera[1]=1;
@@ -91,7 +168,6 @@ class multilista {
 				else {//sistemas
 					cabecera[4]=1;
 				}
-				persona.sigcarrera=0;
 				//agregando hobbie
 				if (strcoll(persona.hobby,"danza")==0){
 					cabecera[5]=1;
@@ -105,14 +181,15 @@ class multilista {
 				else {//beisbol
 					cabecera[8]=1;
 				}
-				persona.sighobby=0;
 				//agregando edad
-				cabecera[9]=1;
-				persona.sigedad=0;						
+				cabecera[9]=1;			
 			}
 			else{
 				int anterior,actual;
-				ordenarByNombre(persona.nombre,anterior,actual);
+				ordenarByNombre(persona.nombre,anterior,actual); //se ordena por nombre alfabéticamente
+				ordenarByEdad (persona.edad,anterior,actual); //se ordena por edad de mayor a menor
+				ordenarByHobbie(persona.hobby,actual); //se pone a la cabeza
+				ordenarByCarrera(persona.carrera,actual,anterior); //se pone al final 
 			}
 			indice++;
 		}
@@ -143,7 +220,7 @@ class multilista {
 		}
 		//verifica si la lista está llena
 		bool estaLlena(){
-			if(indice=(tam-1)){
+			if(indice==(tam-1)){
 				return true;
 			}
 			return false;
