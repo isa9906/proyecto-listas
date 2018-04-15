@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
+#include <windows.h>
 #include "multilista.h"
 
 int menu(int opcion);
 void menuEliminar(int opcion,int indice);
-
 void menuListarCarrera(int opcion, multilista lista);
 void menuListarHobbie(int opcion, multilista lista);
 void imprimir(Persona *persona,multilista lista,int indice);
@@ -20,8 +20,6 @@ using namespace std;
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main() {
-	
-
 	int c=1,opcion=0,i,numPers=0;
 	while(!(numPers>0)){ //se valida que el número de personas sea mayor a cero
 		cout<<"Digite el numero de elementos de la lista: ";
@@ -92,11 +90,13 @@ int main() {
 		}
 		cout<<"Para repetir el menu digite cualquier tecla diferente de 0: ";
 		cin>>c;	
+		system("CLS");
 	}
 	
 }
 
 int menu(int opcion){
+	system("CLS");
 	cout<<endl<<"Digite una opcion"<<endl;
 	cout<<"1. Agregar persona"<<endl<<"2. Eliminar"<<endl<<"3. Listar por edad"
 	<<endl<<"4. Listar por nombre"<<endl<<"5. Listar por hobbie"<<endl<<"6. Listar por carrera"
@@ -158,10 +158,10 @@ void imprimirCarrera(Persona *persona,multilista lista, int opcion){
 	}
 	imprimir(persona,lista,indice);
 }
-		//1 Se enlista por natación
-		// 2 se enlista por basket
-	    // 3 Se enlista por danza
-		// 4 Se enlista por baseball	
+// 1 Se enlista por natación
+// 2 se enlista por basket
+// 3 Se enlista por danza
+// 4 Se enlista por baseball	
 void imprimirHobby(Persona *persona,multilista lista, int opcion){
 	int indice;
 	switch (opcion){
@@ -180,7 +180,6 @@ void imprimirHobby(Persona *persona,multilista lista, int opcion){
 	}
 	imprimir(persona,lista,indice);
 }	
-
 
 Persona agregarPersona(int opcion){
 	const size_t BUFFER_SIZE = 1024;
