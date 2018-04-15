@@ -4,11 +4,13 @@
 
 int menu(int opcion);
 void menuEliminar(int opcion,int indice);
+
 void menuListarCarrera(int opcion, multilista lista);
 void menuListarHobbie(int opcion, multilista lista);
 void imprimir(Persona *persona,multilista lista,int indice);
 void imprimirCarrera(Persona *persona,multilista lista, int opcion);
 void imprimirHobby(Persona *persona,multilista lista, int opcion);
+Persona agregarPersona(int opcion);
 
 Persona nueva;
 Persona *persona;
@@ -21,13 +23,13 @@ int main() {
 	
 
 	int c=1,opcion=0,i,numPers=0;
+	while(!(numPers>0)){ //se valida que el n煤mero de personas sea mayor a cero
+		cout<<"Digite el numero de elementos de la lista: ";
+		cin>>numPers;
+		if(!(numPers>0)) cout<<"Dato err贸neo, dig铆telo de nuevo";
+	}
+	multilista lista (numPers,i); //Creaci贸n de multilista
 	while(c!=0){
-		while(!(numPers>0)){ //se valida que el n鷐ero de personas sea mayor a cero
-			cout<<"Digite el numero de elementos de la lista: ";
-			cin>>numPers;
-			if(!(numPers>0)) cout<<"Dato err髇eo, dig韙elo de nuevo";
-		}
-		 multilista lista (numPers); //Creaci髇 de multilista
 		switch(menu(opcion)){
 				case 1: //Agregar persona
 					if(lista.estaLlena()){
@@ -35,9 +37,8 @@ int main() {
 						break;
 					}
 					else{
-						cout<<"No esta llena";
-						break;
-						//lista.insertar(persona);
+						lista.insertar(agregarPersona(opcion));
+						cout<<"Persona insertada"<<endl;
 					}
 				break;
 				case 2: // Eliminar
@@ -87,7 +88,7 @@ int main() {
 						menuListarCarrera(opcion,lista);
 					}
 				break;
-				default: cout<<"Dato err髇eo";
+				default: cout<<"Dato err贸neo";
 		}
 		cout<<"Para repetir el menu digite cualquier tecla diferente de 0: ";
 		cin>>c;	
@@ -107,9 +108,9 @@ int menu(int opcion){
 void menuEliminar(int opcion,int indice){
 	int posicion=0;
 	while(!(posicion>=1 && posicion<=indice)){
-		cout<<endl<<endl<<"Digite el n鷐ero de lista del elemento que desea eliminar";
-		cin>>posicion; //Posici髇 que se quiere borrar
-		if(!(posicion>=1 && posicion<=indice)) cout<<"Dato err髇eo, la lista tiene "<<indice<<" elementos. Int閚telo de nuevo";
+		cout<<endl<<endl<<"Digite el n煤mero de lista del elemento que desea eliminar";
+		cin>>posicion; //Posici贸n que se quiere borrar
+		if(!(posicion>=1 && posicion<=indice)) cout<<"Dato err贸neo, la lista tiene "<<indice<<" elementos. Int茅ntelo de nuevo";
 	}
 	cout<<endl<<"Seleccione la lista de la cual desea eliminar el elemento:"<<endl<<"1. Nombre"<<endl<<"2. Carrera"
 	<<endl<<"3. Hobbie"<<"4. Edad"<<endl<<"Opcion: ";
@@ -119,7 +120,7 @@ void menuEliminar(int opcion,int indice){
 
 void menuListarCarrera(int opcion,multilista lista){
 	cout<<endl<<"Seleccione la carrera de la cual desea enlistar las personas:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
-	<<endl<<"3. Electr髇ica"<<"4. Industrial"<<endl<<"Opcion: ";
+	<<endl<<"3. Electr贸nica"<<"4. Industrial"<<endl<<"Opcion: ";
 	cin>>opcion;
 	persona=lista.listarByHobby(opcion);
 	imprimirCarrera(persona,lista,opcion);
@@ -157,7 +158,7 @@ void imprimirCarrera(Persona *persona,multilista lista, int opcion){
 	}
 	imprimir(persona,lista,indice);
 }
-		//1 Se enlista por nataci髇
+		//1 Se enlista por nataci贸n
 		// 2 se enlista por basket
 	    // 3 Se enlista por danza
 		// 4 Se enlista por baseball	
@@ -180,5 +181,56 @@ void imprimirHobby(Persona *persona,multilista lista, int opcion){
 	imprimir(persona,lista,indice);
 }	
 
+
+Persona agregarPersona(int opcion){
+	const size_t BUFFER_SIZE = 1024;
+	char *nombre = new char[BUFFER_SIZE];
+	//se agrega una nueva persona
+	Persona persona;
+	//se ingresa el nombre
+	cout<<endl<<"Nombre: ";
+	cin>>nombre;
+	persona.nombre = nombre;			
+	//se ingresa la edad
+	cout<<"Edad: ";
+	cin>>persona.edad;
+	//se ingresa la carrera
+	cout<<"Carrera: 1. Electronica 2. Catastral 3. Industrial 4. Sistemas : ";
+	cin>>opcion;
+	switch(opcion){
+		case 1:					
+			persona.carrera = "electronica";
+		break;
+		case 2:
+			persona.carrera = "catastral";
+		break;
+		case 3:
+			persona.carrera = "industrial";
+		break;
+		case 4:
+			persona.carrera = "sistemas";
+		break;
+		default: cout<<"Dato erroneo";
+	}
+	//se ingresa el hobbie
+	cout<<"Hobbie: 1. Danza 2. Natacion 3. Basket 4. Baseball : ";
+	cin>>opcion;
+	switch(opcion){
+		case 1:
+			persona.hobby = "danza";
+		break;
+		case 2:
+			persona.hobby = "natacion";
+		break;
+		case 3:
+			persona.hobby = "basket";
+		break;
+		case 4:
+			persona.hobby = "baseball";
+		break;
+		default: cout<<"Dato err贸neo";
+	}
+	return persona;					
+}
 
 
