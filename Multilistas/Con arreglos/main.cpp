@@ -4,14 +4,22 @@
 
 int menu(int opcion);
 void menuEliminar(int opcion,int indice);
-void menuListarCarrera(int opcion);
-void menuListarHobbie(int opcion);
+void menuListarCarrera(int opcion, multilista lista);
+void menuListarHobbie(int opcion, multilista lista);
+void imprimir(Persona *persona,multilista lista,int indice);
+void imprimirCarrera(Persona *persona,multilista lista, int opcion);
+void imprimirHobby(Persona *persona,multilista lista, int opcion);
+
+Persona nueva;
+Persona *persona;
 
 using namespace std;
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main() {
+	
+
 	int c=1,opcion=0,i,numPers=0;
 	while(c!=0){
 		while(!(numPers>0)){ //se valida que el número de personas sea mayor a cero
@@ -19,14 +27,17 @@ int main() {
 			cin>>numPers;
 			if(!(numPers>0)) cout<<"Dato erróneo, digítelo de nuevo";
 		}
-		multilista lista (numPers,i); //Creación de multilista
+		 multilista lista (numPers); //Creación de multilista
 		switch(menu(opcion)){
 				case 1: //Agregar persona
 					if(lista.estaLlena()){
 						cout<<"La lista esta llena, no se pueden agregar nuevos elementos"<<endl;
+						break;
 					}
 					else{
-						//se agrega una nueva persona
+						cout<<"No esta llena";
+						break;
+						//lista.insertar(persona);
 					}
 				break;
 				case 2: // Eliminar
@@ -43,7 +54,9 @@ int main() {
 						cout<<"La lista esta vacia, no se puede enlistar ningun elemento"<<endl;
 					}
 					else{
-						//se enlista por edad
+						
+						persona = lista.listarByEdad();
+						imprimir(persona,lista,lista.getindice());	
 					}
 				break;
 				case 4: //Listar por nombre
@@ -52,10 +65,8 @@ int main() {
 					}
 					else{
 						//se lista por nombre
-						char **cadena = lista.listarByNombre(i);
-						for(i=0;i<lista.getindice();i++){
-							cout<<cadena[i]<<endl;
-						}
+						persona = lista.listarByNombre();
+						imprimir(persona,lista,lista.getindice());
 					}
 				break;
 				case 5: //Listar por hobbie
@@ -64,7 +75,7 @@ int main() {
 					}
 					else{
 						//se enlista por hobbie
-						menuListarHobbie(opcion);
+						menuListarHobbie(opcion,lista);
 					}
 				break;
 				case 6: //Listar por carrera
@@ -73,7 +84,7 @@ int main() {
 					}
 					else{
 						//se enlista por carrera
-						menuListarCarrera(opcion);
+						menuListarCarrera(opcion,lista);
 					}
 				break;
 				default: cout<<"Dato erróneo";
@@ -103,51 +114,71 @@ void menuEliminar(int opcion,int indice){
 	cout<<endl<<"Seleccione la lista de la cual desea eliminar el elemento:"<<endl<<"1. Nombre"<<endl<<"2. Carrera"
 	<<endl<<"3. Hobbie"<<"4. Edad"<<endl<<"Opcion: ";
 	cin>>opcion;
-	switch(opcion){
-		case 1: //Eliminar de la lista nombre
-		break;
-		case 2: // Eliminar de la lista carrea
-		break;
-		case 3: //Eliminar de la lista hobbie
-		break;
-		case 4: //Eliminar de la lista edad
-		break;
-		default: cout<<"Dato erróneo";
-	}
+
 }
 
-void menuListarCarrera(int opcion){
+void menuListarCarrera(int opcion,multilista lista){
 	cout<<endl<<"Seleccione la carrera de la cual desea enlistar las personas:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
 	<<endl<<"3. Electrónica"<<"4. Industrial"<<endl<<"Opcion: ";
 	cin>>opcion;
-	switch(opcion){
-		case 1: //Se enlista por sistemas
-		break;
-		case 2: // Se enlista por castral
-		break;
-		case 3: //Se enlista por electrónica
-		break;
-		case 4: //Se enlista por industrial
-		break;
-		default: cout<<"Dato erróneo";
-	}
+	persona=lista.listarByHobby(opcion);
+	imprimirCarrera(persona,lista,opcion);
+	
 }
 
-void menuListarHobbie(int opcion){
+void menuListarHobbie(int opcion, multilista lista){
 	cout<<endl<<"Seleccione el hobbie del cual desea enlistar las personas:"<<endl<<"1. Natacion"<<endl<<"2. Basket"
 	<<endl<<"3. Danza"<<"4. Baseball"<<endl<<"Opcion: ";
 	cin>>opcion;
-	switch(opcion){
-		case 1: //Se enlista por natación
-		break;
-		case 2: // Se enlista por basket
-		break;
-		case 3: //Se enlista por danza
-		break;
-		case 4: //Se enlista por baseball
-		break;
-		default: cout<<"Dato erróneo";
+		persona=lista.listarByHobby(opcion);
+		imprimirHobby(persona,lista,opcion);
+}
+void imprimir(Persona *persona,multilista lista,int indice){
+	int i;
+	for(i=0;i<indice;i++){
+		cout<<persona[i].nombre<<" "<<persona[i].hobby<<" "<<persona[i].carrera<<" "<<persona[i].edad<<endl;	
 	}
 }
+void imprimirCarrera(Persona *persona,multilista lista, int opcion){
+		int indice;
+	switch (opcion){
+		case 1:
+			indice=lista.getindicesist();
+			break;
+		case 2:
+			indice=lista.getindicecatast();
+			break;
+		case 3:
+			indice=lista.getindiceelec();
+			break;
+		case 4:
+			indice=lista.getindiceindus();
+			break;
+	}
+	imprimir(persona,lista,indice);
+}
+		//1 Se enlista por natación
+		// 2 se enlista por basket
+	    // 3 Se enlista por danza
+		// 4 Se enlista por baseball	
+void imprimirHobby(Persona *persona,multilista lista, int opcion){
+	int indice;
+	switch (opcion){
+		case 1:
+			indice=lista.getindicenat();
+			break;
+		case 2:
+			indice=lista.getindicebask();
+			break;
+		case 3:
+			indice=lista.getindicedan();
+			break;
+		case 4:
+			indice=lista.getindicebase();
+			break;
+	}
+	imprimir(persona,lista,indice);
+}	
+
 
 
