@@ -4,27 +4,37 @@
 
 int menu(int opcion);
 void menuEliminar(int opcion,int indice);
-void menuListarCarrera(int opcion);
-void menuListarHobbie(int opcion);
+
+void menuListarCarrera(int opcion, multilista lista);
+void menuListarHobbie(int opcion, multilista lista);
+void imprimir(Persona *persona,multilista lista,int indice);
+void imprimirCarrera(Persona *persona,multilista lista, int opcion);
+void imprimirHobby(Persona *persona,multilista lista, int opcion);
 Persona agregarPersona(int opcion);
+
+Persona nueva;
+Persona *persona;
 
 using namespace std;
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main() {
+	
+
 	int c=1,opcion=0,i,numPers=0;
-	while(!(numPers>0)){ //se valida que el n鷐ero de personas sea mayor a cero
+	while(!(numPers>0)){ //se valida que el n煤mero de personas sea mayor a cero
 		cout<<"Digite el numero de elementos de la lista: ";
 		cin>>numPers;
-		if(!(numPers>0)) cout<<"Dato err髇eo, dig韙elo de nuevo";
+		if(!(numPers>0)) cout<<"Dato err贸neo, dig铆telo de nuevo";
 	}
-	multilista lista (numPers,i); //Creaci髇 de multilista
+	multilista lista (numPers,i); //Creaci贸n de multilista
 	while(c!=0){
 		switch(menu(opcion)){
 				case 1: //Agregar persona
 					if(lista.estaLlena()){
 						cout<<"La lista esta llena, no se pueden agregar nuevos elementos"<<endl;
+						break;
 					}
 					else{
 						lista.insertar(agregarPersona(opcion));
@@ -45,7 +55,9 @@ int main() {
 						cout<<"La lista esta vacia, no se puede enlistar ningun elemento"<<endl;
 					}
 					else{
-						//se enlista por edad
+						
+						persona = lista.listarByEdad();
+						imprimir(persona,lista,lista.getindice());	
 					}
 				break;
 				case 4: //Listar por nombre
@@ -54,10 +66,8 @@ int main() {
 					}
 					else{
 						//se lista por nombre
-						char **cadena = lista.listarByNombre(i);
-						for(i=0;i<lista.getindice();i++){
-							cout<<cadena[i]<<endl;
-						}
+						persona = lista.listarByNombre();
+						imprimir(persona,lista,lista.getindice());
 					}
 				break;
 				case 5: //Listar por hobbie
@@ -66,7 +76,7 @@ int main() {
 					}
 					else{
 						//se enlista por hobbie
-						menuListarHobbie(opcion);
+						menuListarHobbie(opcion,lista);
 					}
 				break;
 				case 6: //Listar por carrera
@@ -75,10 +85,10 @@ int main() {
 					}
 					else{
 						//se enlista por carrera
-						menuListarCarrera(opcion);
+						menuListarCarrera(opcion,lista);
 					}
 				break;
-				default: cout<<"Dato err髇eo";
+				default: cout<<"Dato err贸neo";
 		}
 		cout<<"Para repetir el menu digite cualquier tecla diferente de 0: ";
 		cin>>c;	
@@ -98,59 +108,79 @@ int menu(int opcion){
 void menuEliminar(int opcion,int indice){
 	int posicion=0;
 	while(!(posicion>=1 && posicion<=indice)){
-		cout<<endl<<endl<<"Digite el n鷐ero de lista del elemento que desea eliminar";
-		cin>>posicion; //Posici髇 que se quiere borrar
-		if(!(posicion>=1 && posicion<=indice)) cout<<"Dato err髇eo, la lista tiene "<<indice<<" elementos. Int閚telo de nuevo";
+		cout<<endl<<endl<<"Digite el n煤mero de lista del elemento que desea eliminar";
+		cin>>posicion; //Posici贸n que se quiere borrar
+		if(!(posicion>=1 && posicion<=indice)) cout<<"Dato err贸neo, la lista tiene "<<indice<<" elementos. Int茅ntelo de nuevo";
 	}
 	cout<<endl<<"Seleccione la lista de la cual desea eliminar el elemento:"<<endl<<"1. Nombre"<<endl<<"2. Carrera"
 	<<endl<<"3. Hobbie"<<"4. Edad"<<endl<<"Opcion: ";
 	cin>>opcion;
-	switch(opcion){
-		case 1: //Eliminar de la lista nombre
-		break;
-		case 2: // Eliminar de la lista carrea
-		break;
-		case 3: //Eliminar de la lista hobbie
-		break;
-		case 4: //Eliminar de la lista edad
-		break;
-		default: cout<<"Dato err髇eo";
-	}
+
 }
 
-void menuListarCarrera(int opcion){
+void menuListarCarrera(int opcion,multilista lista){
 	cout<<endl<<"Seleccione la carrera de la cual desea enlistar las personas:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
-	<<endl<<"3. Electr髇ica"<<"4. Industrial"<<endl<<"Opcion: ";
+	<<endl<<"3. Electr贸nica"<<"4. Industrial"<<endl<<"Opcion: ";
 	cin>>opcion;
-	switch(opcion){
-		case 1: //Se enlista por sistemas
-		break;
-		case 2: // Se enlista por castral
-		break;
-		case 3: //Se enlista por electr髇ica
-		break;
-		case 4: //Se enlista por industrial
-		break;
-		default: cout<<"Dato err髇eo";
-	}
+	persona=lista.listarByHobby(opcion);
+	imprimirCarrera(persona,lista,opcion);
+	
 }
 
-void menuListarHobbie(int opcion){
+void menuListarHobbie(int opcion, multilista lista){
 	cout<<endl<<"Seleccione el hobbie del cual desea enlistar las personas:"<<endl<<"1. Natacion"<<endl<<"2. Basket"
 	<<endl<<"3. Danza"<<"4. Baseball"<<endl<<"Opcion: ";
 	cin>>opcion;
-	switch(opcion){
-		case 1: //Se enlista por nataci髇
-		break;
-		case 2: // Se enlista por basket
-		break;
-		case 3: //Se enlista por danza
-		break;
-		case 4: //Se enlista por baseball
-		break;
-		default: cout<<"Dato err髇eo";
+		persona=lista.listarByHobby(opcion);
+		imprimirHobby(persona,lista,opcion);
+}
+void imprimir(Persona *persona,multilista lista,int indice){
+	int i;
+	for(i=0;i<indice;i++){
+		cout<<persona[i].nombre<<" "<<persona[i].hobby<<" "<<persona[i].carrera<<" "<<persona[i].edad<<endl;	
 	}
 }
+void imprimirCarrera(Persona *persona,multilista lista, int opcion){
+		int indice;
+	switch (opcion){
+		case 1:
+			indice=lista.getindicesist();
+			break;
+		case 2:
+			indice=lista.getindicecatast();
+			break;
+		case 3:
+			indice=lista.getindiceelec();
+			break;
+		case 4:
+			indice=lista.getindiceindus();
+			break;
+	}
+	imprimir(persona,lista,indice);
+}
+		//1 Se enlista por nataci贸n
+		// 2 se enlista por basket
+	    // 3 Se enlista por danza
+		// 4 Se enlista por baseball	
+void imprimirHobby(Persona *persona,multilista lista, int opcion){
+	int indice;
+	switch (opcion){
+		case 1:
+			indice=lista.getindicenat();
+			break;
+		case 2:
+			indice=lista.getindicebask();
+			break;
+		case 3:
+			indice=lista.getindicedan();
+			break;
+		case 4:
+			indice=lista.getindicebase();
+			break;
+	}
+	imprimir(persona,lista,indice);
+}	
+
 
 Persona agregarPersona(int opcion){
 	const size_t BUFFER_SIZE = 1024;
@@ -198,7 +228,7 @@ Persona agregarPersona(int opcion){
 		case 4:
 			persona.hobby = "baseball";
 		break;
-		default: cout<<"Dato err髇eo";
+		default: cout<<"Dato err贸neo";
 	}
 	return persona;					
 }
