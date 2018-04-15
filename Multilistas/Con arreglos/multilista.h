@@ -131,9 +131,171 @@ class multilista {
 			}
 			return lista;
 		}
-		void eliminar(string nombre, int pos){
+		void eliminar(int lista, int pos){
+			if(lista==0){
+				
+				eliminarByNombre(lista, pos);
+				
+			}else if(lista>=1&&lista<=4){
+				
+				eliminarByCarrera(lista, pos);
+				
+			}else if(lista>=5&&lista<=8){
+				
+				eliminarByHobbie(lista, pos);
+				
+			}else if(lista==9){
+				
+				eliminarByEdad(lista, pos);
+				
+			}
+			
+		}
+		
+		void eliminarByNombre(int nombre, int pos){
+			int auxiliar = cabecera[nombre];
+			int retardAuxiliar=0;
+			int moreRetardAuxiliar;
+			int i=1;
+			//recorre hasta llegar a la posicion que se desea eliminar
+			//si la posicion que se desea eliminar es mas grande que el tama;o del arreglo se sale
+			while(i<pos&&(auxiliar!=0)){
+				moreRetardAuxiliar=retardAuxiliar;
+				retardAuxiliar = auxiliar;
+				auxiliar = datos[auxiliar-1].signombre;
+				i++;
+			}
+			//si pos es mas grande que el arreglo se toma la ultima posicion del arreglo para eliminar
+			if(auxiliar==0){
+				auxiliar=retardAuxiliar;
+				retardAuxiliar=moreRetardAuxiliar;
+			}
+			//si el arreglo solo tiene una posicion se pasa a eliminar sin problemas
+			if(retardAuxiliar==0){
+				
+			}else{
+				//se remplaza el sig del anterior del que se quiere eliminar por el sig del que se va a eliminar
+				datos[retardAuxiliar-1].signombre=datos[auxiliar-1].signombre;
+				//se busca la carrera que tiene esa persona y dependiendo se selecciona la cabecera
+				if (strcoll(datos[auxiliar-1].carrera,"electronica")==0){
+					retardAuxiliar=cabecera[1];
+					i=1;
+				}
+				else if (strcoll(datos[auxiliar-1].carrera,"catastral")==0){
+					retardAuxiliar=cabecera[2];
+					i=2;
+				}
+				else if (strcoll(datos[auxiliar-1].carrera,"industrial")==0){
+					retardAuxiliar=cabecera[3];
+					i=3;
+				}
+				else {//sistemas
+					retardAuxiliar=cabecera[4];
+					i=4;
+				}
+				//si el que se desea eliminar esta en la cabecera se remplaza por su siguiente
+				if(auxiliar==retardAuxiliar){
+					cabecera[i]=datos[auxiliar-1].sigcarrera;
+				}else{
+					//se busca el que tiene como siguiente el que se va a eliminar
+					while(auxiliar!=retardAuxiliar){
+						moreRetardAuxiliar=retardAuxiliar;
+						retardAuxiliar=datos[retardAuxiliar].sigcarrera;	
+					}
+					//se remplaza el siguiente por el siguiente del que se va a eliminar
+					datos[moreRetardAuxiliar-1].sigcarrera=datos[retardAuxiliar-1].sigcarrera;
+				}
+				//se busca el hobby que tiene esa persona y dependiendo se selecciona la cabecera
+				if (strcoll(datos[auxiliar-1].hobby,"danza")==0){
+					retardAuxiliar=cabecera[5];
+					i=5;
+				}
+				else if (strcoll(datos[auxiliar-1].hobby,"natacion")==0){
+					retardAuxiliar=cabecera[6];
+					i=6;
+				}
+				else if (strcoll(datos[auxiliar-1].hobby,"basket")==0){
+					retardAuxiliar=cabecera[7];
+					i=7;
+				}
+				else {//beisbol
+					retardAuxiliar=cabecera[8];
+					i=8;
+				}
+				//si el que se desea eliminar esta en la cabecera se remplaza por su siguiente
+				if(auxiliar==retardAuxiliar){
+					cabecera[i]=datos[auxiliar-1].sighobby;
+				}else{
+					//se busca el que tiene como siguiente el que se va a eliminar
+					while(auxiliar!=retardAuxiliar){
+						moreRetardAuxiliar=retardAuxiliar;
+						retardAuxiliar=datos[retardAuxiliar].sighobby;	
+					}
+					//se remplaza el siguiente por el siguiente del que se va a eliminar
+					datos[moreRetardAuxiliar-1].sighobby=datos[retardAuxiliar-1].sighobby;
+				}
+				//se selecciona la cabecera de la edad
+				retardAuxiliar=cabecera[9];
+				//si el que se desea eliminar esta en la cabecera se remplaza por su siguiente
+				if(auxiliar==retardAuxiliar){
+					cabecera[9]=datos[auxiliar-1].sighobby;
+				}else{
+					//se busca el que tiene como siguiente el que se va a eliminar
+					while(auxiliar!=retardAuxiliar){
+						moreRetardAuxiliar=retardAuxiliar;
+						retardAuxiliar=datos[retardAuxiliar].sigedad;	
+					}
+					//se remplaza el siguiente por el siguiente del que se va a eliminar
+					datos[moreRetardAuxiliar-1].sigedad=datos[retardAuxiliar-1].sigedad;
+				}
+				
+			}//fin del else
+			//se corren las personas
+			for(i=auxiliar;i<=indice;i++){
+				datos[i-1]=datos[i];
+			}
+			indice--;
+			//si el dato no tiene nombre es porque en la lista no hay personas
+			if(datos[auxiliar-1].nombre==NULL){
+				for(i=0;i<10;i++){
+				    cabecera[i]=0;
+				}
+			}else{
+				//todos los que como siguiente tienen un numero mayor al del que se elimino, se resta 1
+				//para evitar problemas con el indice
+				for(i=1;i<=indice;i++){
+					if(auxiliar<datos[i-1].sigcarrera){
+						datos[i-1].sigcarrera=(datos[i-1].sigcarrera)-1;
+					}
+					if(auxiliar<datos[i-1].sigedad){
+						datos[i-1].sigedad=(datos[i-1].sigedad)-1;
+					}
+					if(auxiliar<datos[i-1].sighobby){
+						datos[i-1].sighobby=(datos[i-1].sighobby)-1;
+					}
+					if(auxiliar<datos[i-1].signombre){
+						datos[i-1].signombre=(datos[i-1].signombre)-1;
+					}
+				}
+				//se hace lo mismo con las cabeceras
+				for(i=0;i<10;i++){
+					if(auxiliar<cabecera[i]){
+						cabecera[i]=cabecera[i]-1;
+					}
+				}
+			}
+		}
+		void eliminarByCarrera(int carrera, int pos){
 		
 		}
+		void eliminarByHobbie(int hobbie, int pos){
+		
+		}
+		void eliminarByEdad(int edad, int pos){
+		
+		}
+		
+	
 		//verifica si la lista está vacía
 		bool estaVacia(){
 			if(indice==0){
