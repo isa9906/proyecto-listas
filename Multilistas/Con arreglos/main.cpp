@@ -136,9 +136,15 @@ void menuListarHobbie(int opcion, multilista lista){
 }
 void imprimir(Persona *persona,multilista lista,int indice){
 	int i;
+	if(indice!=0){
+	
 	for(i=0;i<indice;i++){
 		cout<<persona[i].nombre<<" "<<persona[i].hobby<<" "<<persona[i].carrera<<" "<<persona[i].edad<<endl;	
 	}
+}
+else{
+	cout<<"No hay elementos con estas características";
+}
 }
 void imprimirCarrera(Persona *persona,multilista lista, int opcion){
 		int indice;
