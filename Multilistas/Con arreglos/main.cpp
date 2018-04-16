@@ -26,7 +26,7 @@ int main() {
 		cin>>numPers;
 		if(!(numPers>0)) cout<<"Dato erróneo, digítelo de nuevo";
 	}
-	multilista lista (numPers,i); //Creación de multilista
+	multilista lista (numPers); //Creación de multilista
 	while(c!=0){
 		switch(menu(opcion)){
 				case 1: //Agregar persona

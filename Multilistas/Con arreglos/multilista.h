@@ -223,6 +223,8 @@ class multilista {
 			actual=datos[actual-1].sigedad;
 			i++;
 		}
+		return lista;
+	}
 		void eliminar(int lista, int pos){
 			if(lista==0){
 				
@@ -749,8 +751,6 @@ class multilista {
 			}
 		
 		}
-		return lista;
-	}
 	
 	Persona  *listarByHobby(int hobby){
 		int actual;
