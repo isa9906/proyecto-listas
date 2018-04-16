@@ -1,6 +1,5 @@
-#include <string.h>
 #include <iostream>
-
+#include <string.h>
 using namespace std;
 
 struct Persona {
@@ -235,10 +234,13 @@ class multilista {
 		}
 		return lista;
 	}
-	
-	void eliminar(int lista, int pos){
-		if(lista==0){			
-			eliminarByNombre(lista, pos);
+
+
+		void eliminar(int lista, int pos){
+			lista=lista-1;
+			if(lista==0){
+				
+				eliminarByNombre(lista, pos);
 				
 			}else if(lista>=1&&lista<=4){
 				
@@ -258,6 +260,7 @@ class multilista {
 		
 		void eliminarByNombre(int nombre, int pos){
 			int auxiliar = cabecera[nombre];
+			cout<<indice<<endl;
 			int retardAuxiliar=0;
 			int moreRetardAuxiliar;
 			int i=1;
@@ -388,6 +391,7 @@ class multilista {
 					}
 				}
 			}
+			cout<<indice<<endl;
 		}
 		void eliminarByCarrera(int carrera, int pos){
 			int auxiliar = cabecera[carrera];
@@ -762,7 +766,6 @@ class multilista {
 		
 		}
 
-	
 	Persona  *listarByHobby(int hobby){
 		int actual;
 		Persona *lista;
