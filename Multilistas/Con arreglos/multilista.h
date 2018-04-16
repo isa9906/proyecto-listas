@@ -138,129 +138,9 @@ class multilista {
 			}
 			
 		}
-	public:	
-		//Constructor
-		multilista(int numPers){
-				
-			cabecera= new int [10];
-			for(i=0;i<10;i++){
-				cabecera[i] = 0;
-			}
-			datos = new Persona [numPers]; 
-			indice=0;
-			indiceindust=0;
-			indicecatast=0;
-			indicesist=0;
-			indiceelec=0;//indices para manejar carreras
-			indicenat=0;
-			indicebask=0;
-			indicedan=0;
-			indicebase=0;//indices para manejar hobbies
-		}
-		void insertar(Persona persona){
-			persona.signombre=0;
-			persona.sigcarrera=0;
-			persona.sighobby=0;
-			persona.sigedad=0;
-			datos[indice]=persona;	
-			if (estaVacia()){
-				//agregando nombre
-				cabecera[0]=1;
-				//agregando carrera
-				if (strcoll(persona.carrera,"electronica")==0){
-					cabecera[1]=1;
-				}
-				else if (strcoll(persona.carrera,"catastral")==0){
-					cabecera[2]=1;
-				}
-				else if (strcoll(persona.carrera,"industrial")==0){
-					cabecera[3]=1;
-				}
-				else {//sistemas
-					cabecera[4]=1;
-				}
-				//agregando hobbie
-				if (strcoll(persona.hobby,"danza")==0){
-					cabecera[5]=1;
-				}
-				else if (strcoll(persona.hobby,"natacion")==0){
-					cabecera[6]=1;
-				}
-				else if (strcoll(persona.hobby,"basket")==0){
-					cabecera[7]=1;
-				}
-				else {//beisbol
-					cabecera[8]=1;
-				}
-				//agregando edad
-				cabecera[9]=1;			
-			}
-			else{
-				int anterior,actual;
-				ordenarByNombre(persona.nombre,anterior,actual); //se ordena por nombre alfabéticamente
-				ordenarByEdad (persona.edad,anterior,actual); //se ordena por edad de mayor a menor
-				ordenarByHobbie(persona.hobby,actual); //se pone a la cabeza
-				ordenarByCarrera(persona.carrera,actual,anterior); //se pone al final 
-			}
-			indice++;
-		}
-		
-		//funciona 
-	Persona *listarByNombre(){
-		int actual;
-		Persona *lista;
-		lista = new Persona [indice];
-		actual = cabecera[0];
-		i = 0;
-		while(actual!=0){
-			lista[i] = datos[actual-1];
-			actual = datos[actual-1].signombre;
-			i++;
-		}
-			return lista;
-	}
-
-	//funciona
-	Persona  *listarByEdad(){
-		int actual;
-		Persona *lista;
-		lista= new Persona[indice];
-		actual=cabecera[9];
-		i=0;
-		while(actual!=0){
-			lista[i]=datos[actual-1];
-			actual=datos[actual-1].sigedad;
-			i++;
-		}
-		return lista;
-	}
-
-
-		void eliminar(int lista, int pos){
-			lista=lista-1;
-			if(lista==0){
-				
-				eliminarByNombre(lista, pos);
-				
-			}else if(lista>=1&&lista<=4){
-				
-				eliminarByCarrera(lista, pos);
-				
-			}else if(lista>=5&&lista<=8){
-				
-				eliminarByHobbie(lista, pos);
-				
-			}else if(lista==9){
-				
-				eliminarByEdad(lista, pos);
-				
-			}
-			
-		}
-		
 		void eliminarByNombre(int nombre, int pos){
 			int auxiliar = cabecera[nombre];
-			cout<<indice<<endl;
+			//cout<<indice<<endl;
 			int retardAuxiliar=0;
 			int moreRetardAuxiliar;
 			int i=1;
@@ -361,7 +241,6 @@ class multilista {
 			for(i=auxiliar;i<=indice;i++){
 				datos[i-1]=datos[i];
 			}
-			indice--;
 			//si el dato no tiene nombre es porque en la lista no hay personas
 			if(datos[auxiliar-1].nombre==NULL){
 				for(i=0;i<10;i++){
@@ -391,7 +270,8 @@ class multilista {
 					}
 				}
 			}
-			cout<<indice<<endl;
+			//cout<<indice<<endl;
+			this->indice = this->indice - 1;
 		}
 		void eliminarByCarrera(int carrera, int pos){
 			int auxiliar = cabecera[carrera];
@@ -765,86 +645,221 @@ class multilista {
 			}
 		
 		}
+	public:	
+		//Constructor
+		multilista(int numPers){
+				
+			cabecera= new int [10];
+			for(i=0;i<10;i++){
+				cabecera[i] = 0;
+			}
+			datos = new Persona [numPers]; 
+			indice=0;
+			indiceindust=0;
+			indicecatast=0;
+			indicesist=0;
+			indiceelec=0;//indices para manejar carreras
+			indicenat=0;
+			indicebask=0;
+			indicedan=0;
+			indicebase=0;//indices para manejar hobbies
+		}
+		void insertar(Persona persona){
+			persona.signombre=0;
+			persona.sigcarrera=0;
+			persona.sighobby=0;
+			persona.sigedad=0;
+			datos[indice]=persona;	
+			if (estaVacia()){
+				//agregando nombre
+				cabecera[0]=1;
+				//agregando carrera
+				if (strcoll(persona.carrera,"electronica")==0){
+					cabecera[1]=1;
+				}
+				else if (strcoll(persona.carrera,"catastral")==0){
+					cabecera[2]=1;
+				}
+				else if (strcoll(persona.carrera,"industrial")==0){
+					cabecera[3]=1;
+				}
+				else {//sistemas
+					cabecera[4]=1;
+				}
+				//agregando hobbie
+				if (strcoll(persona.hobby,"danza")==0){
+					cabecera[5]=1;
+				}
+				else if (strcoll(persona.hobby,"natacion")==0){
+					cabecera[6]=1;
+				}
+				else if (strcoll(persona.hobby,"basket")==0){
+					cabecera[7]=1;
+				}
+				else {//beisbol
+					cabecera[8]=1;
+				}
+				//agregando edad
+				cabecera[9]=1;			
+			}
+			else{
+				int anterior,actual;
+				ordenarByNombre(persona.nombre,anterior,actual); //se ordena por nombre alfabéticamente
+				ordenarByEdad (persona.edad,anterior,actual); //se ordena por edad de mayor a menor
+				ordenarByHobbie(persona.hobby,actual); //se pone a la cabeza
+				ordenarByCarrera(persona.carrera,actual,anterior); //se pone al final 
+			}
+			indice++;
+			//indices de las carreras
+			if (strcoll(persona.carrera,"electronica")==0){
+					indiceelec++;;
+			}
+			else if (strcoll(persona.carrera,"catastral")==0){
+				indicecatast++;
+			}
+			else if (strcoll(persona.carrera,"industrial")==0){
+				indiceindust++;
+			}
+			else {//sistemas
+				indicesist++;
+			}
+			//indices de los hobbies
+			if (strcoll(persona.hobby,"danza")==0){
+					indicedan++;
+				}
+				else if (strcoll(persona.hobby,"natacion")==0){
+					indicenat++;
+				}
+				else if (strcoll(persona.hobby,"basket")==0){
+					indicebask++;
+				}
+				else {//beisbol
+					indicebase;
+				}
+		}
+		
+		//funciona 
+		Persona *listarByNombre(){
+			int i;
+			int actual;
+			Persona *lista;
+			lista = new Persona [indice];
+			actual = cabecera[0];
+			i = 0;
+			while(actual!=0){
+				lista[i] = datos[actual-1];
+				actual = datos[actual-1].signombre;
+				i++;
+			}
+				return lista;
+		}
 
-	Persona  *listarByHobby(int hobby){
-		int actual;
-		Persona *lista;
-	    //1 Se enlista por natación
-		  // 2 se enlista por basket
-	    // 3 Se enlista por danza
-		  // 4 Se enlista por baseball
-			switch (hobby){
-			case 1:
-				actual=cabecera[6];
-				lista= new Persona [indicenat];
-			break;
-			case 2:
-				actual=cabecera[7];
-				lista= new Persona [indicebask];
-			break;
-			case 3:
-				actual=cabecera[5];
-				lista= new Persona [indicedan];	
-				break;
-			case 4:
-				actual=cabecera[8];
-				lista= new Persona [indicebase];
-			break;
+		//funciona
+		Persona  *listarByEdad(){
+			int i = 0;
+			int actual;
+			Persona *lista;
+			lista= new Persona[indice];
+			actual=cabecera[9];
+			i=0;
+			while(actual!=0){
+				lista[i]=datos[actual-1];
+				actual=datos[actual-1].sigedad;
+				i++;
+			}
+			return lista;
 		}
-		i=0;
-		while(actual!=0){
-			lista[i]=datos[actual-1];
-			actual=datos[actual-1].sighobby;
-			i++;
-		}
-		return lista;
-	}
-				/*
-	cabecera[0] -> nombre
-	cabecera[1] -> electronica
-	cabecera[2] -> catastral
-	cabecera[3] -> industrial
-	cabecera[4] -> sistemas
-	cabecera[5] -> danza
-	cabecera[6] -> natacion
-	cabecera[7] -> basket
-	cabecera[8] -> baseball
-	cabecera[9] -> edad
-	*/
+
+
+		void eliminar(int lista, int pos){
 	
-	Persona  *listarByCarrera(int carrera){
-		int actual;
-		Persona *lista;
-		// 1 Se enlista por sistemas	
-	  // 2 Se enlista por castral
-	  // 3 Se enlista por electrónica
-	  // 4 Se enlista por industrial
-		switch (carrera){
-			case 1:
-				actual=cabecera[4];
-				lista= new Persona [indicesist];
-			break;
-			case 2:
-				actual=cabecera[2];
-				lista= new Persona [indicecatast];
-			break;
-			case 3:
-				actual=cabecera[1];
-				lista= new Persona [indiceelec];	
+			lista=lista-1;
+			if(lista==0){
+				
+				eliminarByNombre(lista, pos);
+				
+			}else if(lista>=1&&lista<=4){
+				
+				eliminarByCarrera(lista, pos);
+				
+			}else if(lista>=5&&lista<=8){
+				
+				eliminarByHobbie(lista, pos);
+				
+			}else if(lista==9){
+				
+				eliminarByEdad(lista, pos);
+				
+			}
+		}
+		
+		Persona  *listarByHobby(int hobby){
+			int actual;
+			Persona *lista;
+		    //1 Se enlista por natación
+			  // 2 se enlista por basket
+		    // 3 Se enlista por danza
+			  // 4 Se enlista por baseball
+				switch (hobby){
+				case 1:
+					actual=cabecera[6];
+					lista= new Persona [indicenat];
 				break;
-			case 4:
-				actual=cabecera[3];
-				lista= new Persona [indiceindust];
-			break;
+				case 2:
+					actual=cabecera[7];
+					lista= new Persona [indicebask];
+				break;
+				case 3:
+					actual=cabecera[5];
+					lista= new Persona [indicedan];	
+					break;
+				case 4:
+					actual=cabecera[8];
+					lista= new Persona [indicebase];
+				break;
+			}
+			i=0;
+			while(actual!=0){
+				lista[i]=datos[actual-1];
+				actual=datos[actual-1].sighobby;
+				i++;
+			}
+			return lista;
 		}
-		i=0;	
-		while(actual!=0){
-			lista[i]=datos[actual-1];
-			actual=datos[actual-1].sigcarrera;
-			i++;
+	
+		Persona  *listarByCarrera(int carrera){
+			int actual;
+			Persona *lista;
+			// 1 Se enlista por sistemas	
+		  // 2 Se enlista por castral
+		  // 3 Se enlista por electrónica
+		  // 4 Se enlista por industrial
+			switch (carrera){
+				case 1:
+					actual=cabecera[4];
+					lista= new Persona [indicesist];
+				break;
+				case 2:
+					actual=cabecera[2];
+					lista= new Persona [indicecatast];
+				break;
+				case 3:
+					actual=cabecera[1];
+					lista= new Persona [indiceelec];	
+					break;
+				case 4:
+					actual=cabecera[3];
+					lista= new Persona [indiceindust];
+				break;
+			}
+			i=0;	
+			while(actual!=0){
+				lista[i]=datos[actual-1];
+				actual=datos[actual-1].sigcarrera;
+				i++;
+			}
+			return lista;
 		}
-		return lista;
-	}
 
 		//verifica si la lista está vacía
 		bool estaVacia(){
@@ -859,6 +874,9 @@ class multilista {
 				return true;
 			}
 			return false;
+		}
+		void decreaseIndice(){
+			indice = indice - 1;
 		}
 		int getindicesist(){
 			return indicesist;

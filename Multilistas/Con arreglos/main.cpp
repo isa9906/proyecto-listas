@@ -24,10 +24,11 @@ int main() {
 	while(!(numPers>0)){ //se valida que el número de personas sea mayor a cero
 		cout<<"Digite el numero de elementos de la lista: ";
 		cin>>numPers;
-		if(!(numPers>0)) cout<<"Dato erróneo, digítelo de nuevo";
+		if(!(numPers>0)) cout<<"Dato erroneo, digitelo de nuevo";
 	}
 	multilista lista (numPers); //Creación de multilista
 	while(c!=0){
+		cout<<"indice: "<<lista.getindice();
 		switch(menu(opcion)){
 				case 1: //Agregar persona
 					if(lista.estaLlena()){
@@ -59,6 +60,7 @@ int main() {
 					}
 				break;
 				case 4: //Listar por nombre
+					
 					if(lista.estaVacia()){
 						cout<<"La lista esta vacia, no se puede enlistar ningun elemento"<<endl;
 					}
@@ -86,7 +88,7 @@ int main() {
 						menuListarCarrera(opcion,lista);
 					}
 				break;
-				default: cout<<"Dato erróneo";
+				default: cout<<"Dato erroneo";
 		}
 		cout<<"Para repetir el menu digite cualquier tecla diferente de 0: ";
 		cin>>c;	
@@ -96,7 +98,7 @@ int main() {
 }
 
 int menu(int opcion){
-	system("CLS");
+	//system("CLS");
 	cout<<endl<<"Digite una opcion"<<endl;
 	cout<<"1. Agregar persona"<<endl<<"2. Eliminar"<<endl<<"3. Listar por edad"
 	<<endl<<"4. Listar por nombre"<<endl<<"5. Listar por hobbie"<<endl<<"6. Listar por carrera"
@@ -109,16 +111,16 @@ void menuEliminar(int opcion,int indice,multilista lista){
 	int posicion=0;
 	int seleccion=0;
 	while(!(posicion>=1 && posicion<=indice)){
-		cout<<endl<<endl<<"Digite el número de lista del elemento que desea eliminar";
+		cout<<endl<<endl<<"Digite el numero de lista del elemento que desea eliminar: ";
 		cin>>posicion; //Posición que se quiere borrar
 		if(!(posicion>=1 && posicion<=indice)) cout<<"Dato erróneo, la lista tiene "<<indice<<" elementos. Inténtelo de nuevo";
 	}
 	cout<<endl<<"Seleccione la lista de la cual desea eliminar el elemento:"<<endl<<"1. Nombre"<<endl<<"2. Carrera"
-	<<endl<<"3. Hobbie"<<"4. Edad"<<endl<<"Opcion: ";
+	<<endl<<"3. Hobbie"<<endl<<"4. Edad"<<endl<<"Opcion: ";
 	cin>>opcion;
 	if(opcion==2){
 		cout<<endl<<"Seleccione la carrera de la cual desea eliminar un elemento:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
-		<<endl<<"3. Electrónica"<<"4. Industrial"<<endl<<"Opcion: ";
+		<<endl<<"3. Electronica"<<endl<<"4. Industrial"<<endl<<"Opcion: ";
 		cin>>seleccion;
 		opcion=seleccion+1;
 	}else if(opcion==3){
@@ -135,7 +137,7 @@ void menuEliminar(int opcion,int indice,multilista lista){
 
 void menuListarCarrera(int opcion,multilista lista){
 	cout<<endl<<"Seleccione la carrera de la cual desea enlistar las personas:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
-	<<endl<<"3. Electrónica"<<"4. Industrial"<<endl<<"Opcion: ";
+	<<endl<<"3. Electronica"<<"4. Industrial"<<endl<<"Opcion: ";
 	cin>>opcion;
 	persona=lista.listarByHobby(opcion);
 	imprimirCarrera(persona,lista,opcion);
