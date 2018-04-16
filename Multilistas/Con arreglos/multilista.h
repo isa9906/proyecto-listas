@@ -271,7 +271,7 @@ class multilista {
 				}
 			}
 			//cout<<indice<<endl;
-			this->indice = this->indice - 1;
+			indice--;
 		}
 		void eliminarByCarrera(int carrera, int pos){
 			int auxiliar = cabecera[carrera];

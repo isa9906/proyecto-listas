@@ -46,7 +46,30 @@ int main() {
 					}
 					else{
 						//se elimina un elemento
-						menuEliminar(opcion,lista.getindice(),lista);
+						int posicion=0;
+						int seleccion=0;
+						while(!(posicion>=1 && posicion<=lista.getindice())){
+							cout<<endl<<endl<<"Digite el numero de lista del elemento que desea eliminar: ";
+							cin>>posicion; //Posición que se quiere borrar
+							if(!(posicion>=1 && posicion<=lista.getindice())) cout<<"Dato erróneo, la lista tiene "<<lista.getindice()<<" elementos. Inténtelo de nuevo";
+						}
+						cout<<endl<<"Seleccione la lista de la cual desea eliminar el elemento:"<<endl<<"1. Nombre"<<endl<<"2. Carrera"
+						<<endl<<"3. Hobbie"<<endl<<"4. Edad"<<endl<<"Opcion: ";
+						cin>>opcion;
+						if(opcion==2){
+							cout<<endl<<"Seleccione la carrera de la cual desea eliminar un elemento:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
+							<<endl<<"3. Electronica"<<endl<<"4. Industrial"<<endl<<"Opcion: ";
+							cin>>seleccion;
+							opcion=seleccion+1;
+						}else if(opcion==3){
+							cout<<endl<<"Seleccione el hobbie del cual desea eliminar un elemento:"<<endl<<"1. Natacion"<<endl<<"2. Basket"
+							<<endl<<"3. Danza"<<"4. Baseball"<<endl<<"Opcion: ";
+							cin>>seleccion;
+							opcion=seleccion+5;
+						}else if(opcion==4){
+							opcion=opcion+6;
+						}
+						lista.eliminar(opcion,posicion);
 					}
 				break;
 				case 3: //Listar por edad
@@ -108,31 +131,7 @@ int menu(int opcion){
 }
 
 void menuEliminar(int opcion,int indice,multilista lista){
-	int posicion=0;
-	int seleccion=0;
-	while(!(posicion>=1 && posicion<=indice)){
-		cout<<endl<<endl<<"Digite el numero de lista del elemento que desea eliminar: ";
-		cin>>posicion; //Posición que se quiere borrar
-		if(!(posicion>=1 && posicion<=indice)) cout<<"Dato erróneo, la lista tiene "<<indice<<" elementos. Inténtelo de nuevo";
-	}
-	cout<<endl<<"Seleccione la lista de la cual desea eliminar el elemento:"<<endl<<"1. Nombre"<<endl<<"2. Carrera"
-	<<endl<<"3. Hobbie"<<endl<<"4. Edad"<<endl<<"Opcion: ";
-	cin>>opcion;
-	if(opcion==2){
-		cout<<endl<<"Seleccione la carrera de la cual desea eliminar un elemento:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
-		<<endl<<"3. Electronica"<<endl<<"4. Industrial"<<endl<<"Opcion: ";
-		cin>>seleccion;
-		opcion=seleccion+1;
-	}else if(opcion==3){
-		cout<<endl<<"Seleccione el hobbie del cual desea eliminar un elemento:"<<endl<<"1. Natacion"<<endl<<"2. Basket"
-		<<endl<<"3. Danza"<<"4. Baseball"<<endl<<"Opcion: ";
-		cin>>seleccion;
-		opcion=seleccion+5;
-	}else if(opcion==4){
-		opcion=opcion+6;
-	}
-	lista.eliminar(opcion,posicion);
-
+	
 }
 
 void menuListarCarrera(int opcion,multilista lista){
