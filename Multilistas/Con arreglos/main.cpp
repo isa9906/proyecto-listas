@@ -4,7 +4,7 @@
 #include "multilista.h"
 
 int menu(int opcion);
-void menuEliminar(int opcion,int indice);
+void menuEliminar(int opcion,int indice,multilista lista);
 void menuListarCarrera(int opcion, multilista lista);
 void menuListarHobbie(int opcion, multilista lista);
 void imprimir(Persona *persona,multilista lista,int indice);
@@ -26,7 +26,7 @@ int main() {
 		cin>>numPers;
 		if(!(numPers>0)) cout<<"Dato erróneo, digítelo de nuevo";
 	}
-	multilista lista (numPers,i); //Creación de multilista
+	multilista lista (numPers); //Creación de multilista
 	while(c!=0){
 		switch(menu(opcion)){
 				case 1: //Agregar persona
@@ -45,7 +45,7 @@ int main() {
 					}
 					else{
 						//se elimina un elemento
-						menuEliminar(opcion,lista.getindice());
+						menuEliminar(opcion,lista.getindice(),lista);
 					}
 				break;
 				case 3: //Listar por edad
@@ -105,8 +105,9 @@ int menu(int opcion){
 	return opcion;
 }
 
-void menuEliminar(int opcion,int indice){
+void menuEliminar(int opcion,int indice,multilista lista){
 	int posicion=0;
+	int seleccion=0;
 	while(!(posicion>=1 && posicion<=indice)){
 		cout<<endl<<endl<<"Digite el número de lista del elemento que desea eliminar";
 		cin>>posicion; //Posición que se quiere borrar
@@ -115,6 +116,20 @@ void menuEliminar(int opcion,int indice){
 	cout<<endl<<"Seleccione la lista de la cual desea eliminar el elemento:"<<endl<<"1. Nombre"<<endl<<"2. Carrera"
 	<<endl<<"3. Hobbie"<<"4. Edad"<<endl<<"Opcion: ";
 	cin>>opcion;
+	if(opcion==2){
+		cout<<endl<<"Seleccione la carrera de la cual desea eliminar un elemento:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
+		<<endl<<"3. Electrónica"<<"4. Industrial"<<endl<<"Opcion: ";
+		cin>>seleccion;
+		opcion=seleccion+1;
+	}else if(opcion==3){
+		cout<<endl<<"Seleccione el hobbie del cual desea eliminar un elemento:"<<endl<<"1. Natacion"<<endl<<"2. Basket"
+		<<endl<<"3. Danza"<<"4. Baseball"<<endl<<"Opcion: ";
+		cin>>seleccion;
+		opcion=seleccion+5;
+	}else if(opcion==4){
+		opcion=opcion+6;
+	}
+	lista.eliminar(opcion,posicion);
 
 }
 
