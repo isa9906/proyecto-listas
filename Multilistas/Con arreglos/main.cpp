@@ -36,7 +36,7 @@ int main() {
 					}
 					else{
 						lista.insertar(agregarPersona(opcion));
-						cout<<"Persona insertada"<<endl;
+						//cout<<"Persona insertada"<<endl;
 					}
 				break;
 				case 2: // Eliminar

@@ -1,8 +1,5 @@
 #include <iostream>
-#include <stddef.h>
 #include <string.h>
-using namespace std;
-
 struct Persona {
 	char* nombre;
 	char* carrera;
@@ -39,6 +36,7 @@ class multilista {
 		int indicenat,indicebask,indicedan,indicebase;//indices para manejar hobbies
 		int i;
 		int numPers;
+		
 		//se ordena la multilista por nombre, se declara privado
 		void ordenarByNombre (char *nombre,int anterior,int actual){
 			anterior=-1;
@@ -111,6 +109,7 @@ class multilista {
 			datos[indice].sighobby = actual;
 			cabecera[cab] = indice+1;
 		}
+		
 		//se coloca la carrera al final
 		void ordenarByCarrera(char *carrera, int actual, int anterior){
 			int cab;
@@ -140,6 +139,112 @@ class multilista {
 			}
 			
 		}
+		//se elimina segun la lista de nombre
+		void eliminarByNombre(int pos){
+			int j;
+			Persona *lista;
+			lista = listarByNombre();
+			backEliminar(lista,pos);
+		}
+	
+		//se elimina segun la lista de edad
+		void eliminarByEdad(int pos){
+			int j;
+			Persona *lista;
+			lista = listarByEdad();
+			backEliminar(lista,pos);
+		}
+		//se elimina segun la lista de carreras
+		void eliminarByCarrera(int lista,int pos){
+			Persona *list;
+			switch(lista){
+				case 1: //Sistemas
+					list = listarByCarrera(1);
+				break;
+				case 2: //Catastral
+					list = listarByCarrera(2);
+				break;
+				case 3: //Electrónica
+					list = listarByCarrera(3);
+				break;
+				case 4: //Industrial
+					list = listarByCarrera(4);
+				break;
+			}
+			backEliminar(list,pos);
+		}
+		//Se elimina según lista de hobbie
+		void eliminarByHobby(int lista,int pos){
+			Persona *list;
+			switch(lista){
+				case 5: //Natacion
+					list = listarByHobby(1);
+				break;
+				case 6: //Basket
+					list = listarByHobby(2);
+				break;
+				case 7: //Danza
+					list = listarByHobby(3);
+				break;
+				case 8: //Baseball
+					list = listarByHobby(4);
+				break;
+			}
+			backEliminar(list,pos);
+		}
+		//función para comparar estructuras
+		bool compareE(Persona per1,Persona per2){
+			if(strcoll(per1.nombre,per2.nombre)==0 && strcoll(per1.carrera,per2.carrera)==0 && strcoll(per1.hobby,per2.hobby)==0 &&
+			per1.edad == per2.edad && per1.signombre == per2.signombre && per1.sigedad == per2.sigedad && per1.sigcarrera == per2.sigcarrera &&
+			per1.sighobby == per2.sighobby){
+				return true;
+			}
+			return false;
+		}
+	
+		//para ver qué hace exactamente esta funcion ver cada una de las funciones de eliminar
+		void backEliminar(Persona *lista,int pos){
+			int j;
+			Persona persona = lista[pos-1]; //persona a la que se quiere eliminar
+			i = 0;
+			//el ciclo encuentra la posicion en donde se encuentra el elemento a eliminar
+			while(true){
+				if(compareE(persona,datos[i])){
+					break;
+				}
+				i++;		
+			}
+			datos[i].edad = 0; //centinela que indica que esta persona se va a eliminar, lo hago porque no me deja hacer datos[i] = NULL
+			//en el arreglo person se copian todos los elementos de datos pero sin el elemento que se elimina
+			Persona *person;
+			person = new Persona[numPers];
+			int k=0;
+			for(j=0;j<indice;j++){
+				if(datos[j].edad!=0){
+					person[k] = datos[j];
+					k++;
+				}
+			}
+			//se hace de cuenta que la lista esta vacia
+			indice = 0;
+			//indices de carreras
+			indicecatast = 0;
+			indiceindust = 0;
+			indicesist = 0;
+			indiceelec = 0;
+			//indices de hobbie
+			indicebase = 0;
+			indicenat = 0;
+			indicebask = 0;
+			indicenat = 0;
+			
+			//e insertamos todos los elementos que quedaron, así la funcion insertar
+			//se encargara de la cuestion de los siguientes
+			for(i=0;i<k;i++){
+				insertar(person[i]);
+			}
+		}
+		
 		
 	public:	
 		//Constructor
@@ -268,164 +373,20 @@ class multilista {
 
 		//eliminar
 		void eliminar(int lista, int pos){
-			//datos = aumentarTamano();
 			lista=lista-1;
 			if(lista==0){
 				eliminarByNombre(pos);	
 			}
-			/*
 			else if(lista>=1&&lista<=4){
 				eliminarByCarrera(lista, pos);
 			}
 			else if(lista>=5&&lista<=8){	
-				eliminarByHobbie(lista, pos);
-			}*/
+				eliminarByHobby(lista, pos);
+			}
 			else if(lista==9){
 				eliminarByEdad(pos);
 			}
 		}
-		
-		void eliminarByNombre(int pos){
-			int j;
-			Persona *lista;
-			lista = listarByNombre();
-			Persona persona = lista[pos-1]; //persona a la que se quiere eliminar
-			i = 0;
-			while(true){
-				if(compareE(persona,datos[i])){
-					break;
-				}
-				i++;		
-			}
-			//al final de ciclo, i indicará la posición que tiene la persona que se quiere eliminar en el array datos
-			//se ubica en el elemento que se quiere borrar
-			int anterior=-1, actual=cabecera[9];
-			while(actual!=(i+1)){
-				anterior = actual;
-				actual = datos[actual-1].signombre;
-			}
-			if(anterior == -1){ //en la cabeza
-				cabecera[9] = datos[actual-1].sigedad;
-				cabecera[0] = datos[actual-1].signombre;
-			}
-			if(datos[actual-1].signombre==0) //en la cola NOMBRE
-				datos[anterior-1].sigedad = 0;
-			if(datos[actual-1].signombre == 0) //en la cola EDAD
-				datos[anterior-1].signombre = 0;
-			else{ //entre medio
-				datos[anterior-1].sigedad = datos[actual-1].sigedad; //se enlazan el anterior y el siguiente del actual
-				datos[anterior-1].signombre = datos[actual-1].signombre; //se enlazan el anterior y el siguiente del actual
-			}
-			//todos los siguientes en nombre se disminuyen en 1
-			for(j=0;j<10;j++){
-				if(cabecera[j]>1)
-					cabecera[j] = cabecera[j] - 1;
-			}
-			for(j=0;j<indice;j++){
-				if(datos[j].sigedad!=0)
-					datos[j].sigedad = datos[j].sigedad-1;
-					datos[j].signombre = datos[j].signombre-1;
-					datos[j].sigcarrera = datos[j].sigcarrera-1;
-					datos[j].sighobby = datos[j].sighobby-1;
-			}
-			//se borra la persona que se habia seleccionado
-			datos[i].edad = 0; //centinela que indica que esta persona se va a eliminar, lo hago porque no me deja hacer datos[i] = NULL
-			//en el arreglo person se copian todos los elementos de datos pero sin el elemento que se elimina
-			Persona *person;
-			person = new Persona[numPers];
-			int k=0;
-			for(j=0;j<indice;j++){
-				if(datos[j].edad!=0){
-					person[k] = datos[j];
-					k++;
-				}
-			}
-			datos = person;
-			indice--;
-		}
-	
-		
-		void eliminarByEdad(int pos){
-			int j;
-			Persona *lista;
-			lista = listarByEdad();
-			Persona persona = lista[pos-1]; //persona a la que se quiere eliminar
-			i = 0;
-			while(true){
-				if(compareE(persona,datos[i])){
-					break;
-				}
-				i++;		
-			}
-			//al final de ciclo, i indicará la posición que tiene la persona que se quiere eliminar en el array datos
-			//se ubica en el elemento que se quiere borrar
-			int anterior=-1, actual=cabecera[9];
-			while(actual!=(i+1)){
-				anterior = actual;
-				actual = datos[actual-1].sigedad;
-			}
-			if(anterior == -1){ //en la cabeza
-				cabecera[9] = datos[actual-1].sigedad;
-				cabecera[0] = datos[actual-1].signombre;
-			}
-			else{ //entre medio
-				datos[anterior-1].sigedad = datos[actual-1].sigedad; //se enlazan el anterior y el siguiente del actual
-				datos[anterior-1].signombre = datos[actual-1].signombre; //se enlazan el anterior y el siguiente del actual
-			}
-			if(datos[actual-1].signombre==0) //en la cola NOMBRE
-				datos[anterior-1].sigedad = 0;
-			if(datos[actual-1].signombre == 0) //en la cola EDAD
-				datos[anterior-1].signombre = 0;
-			
-			
-			//todos los siguientes en nombre se disminuyen en 1
-			for(j=0;j<10;j++){
-				if(cabecera[j]>1)
-					cabecera[j] = cabecera[j] - 1;
-			}
-			for(j=0;j<indice;j++){
-				if(datos[j].sigedad!=0)
-					datos[j].sigedad = datos[j].sigedad-1;
-				if(datos[j].signombre!=0)
-					datos[j].signombre = datos[j].signombre-1;
-				if(datos[j].sigcarrera!=0)
-					datos[j].sigcarrera = datos[j].sigcarrera-1;
-				if(datos[j].sighobby!=0)
-					datos[j].sighobby = datos[j].sighobby-1;
-			}
-			//se borra la persona que se habia seleccionado
-			datos[i].edad = 0; //centinela que indica que esta persona se va a eliminar, lo hago porque no me deja hacer datos[i] = NULL
-			//en el arreglo person se copian todos los elementos de datos pero sin el elemento que se elimina
-			Persona *person;
-			person = new Persona[numPers];
-			int k=0;
-			for(j=0;j<indice;j++){
-				if(datos[j].edad!=0){
-					person[k] = datos[j];
-					k++;
-				}
-			}
-			datos = person;
-			indice--;
-		}
-		//función para comparar estructuras
-		bool compareE(Persona per1,Persona per2){
-			if(strcoll(per1.nombre,per2.nombre)==0 && strcoll(per1.carrera,per2.carrera)==0 && strcoll(per1.hobby,per2.hobby)==0 &&
-			per1.edad == per2.edad && per1.signombre == per2.signombre && per1.sigedad == per2.sigedad && per1.sigcarrera == per2.sigcarrera &&
-			per1.sighobby == per2.sighobby){
-				return true;
-			}
-			return false;
-		}
-		
-		/*Persona *aumentaTamano(){
-			Persona *temp;
-			numPers++;
-			temp = new Persona[numPers];
-			temp = datos;
-			return temp;
-		}*/
-		
 		Persona  *listarByHobby(int hobby){
 			int actual;
 			Persona *lista;
