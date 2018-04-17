@@ -12,8 +12,7 @@ void imprimirCarrera(Persona *persona,multilista lista, int opcion);
 void imprimirHobby(Persona *persona,multilista lista, int opcion);
 Persona agregarPersona(int opcion);
 
-Persona nueva;
-Persona *persona;
+
 
 using namespace std;
 
@@ -37,7 +36,7 @@ int main() {
 					}
 					else{
 						lista.insertar(agregarPersona(opcion));
-						cout<<"Persona insertada"<<endl;
+						//cout<<"Persona insertada"<<endl;
 					}
 				break;
 				case 2: // Eliminar
@@ -77,9 +76,10 @@ int main() {
 						cout<<"La lista esta vacia, no se puede enlistar ningun elemento"<<endl;
 					}
 					else{
-						
+						Persona *persona;
 						persona = lista.listarByEdad();
 						imprimir(persona,lista,lista.getindice());	
+						delete persona;
 					}
 				break;
 				case 4: //Listar por nombre
@@ -89,8 +89,10 @@ int main() {
 					}
 					else{
 						//se lista por nombre
+						Persona *persona;
 						persona = lista.listarByNombre();
 						imprimir(persona,lista,lista.getindice());
+						delete persona;
 					}
 				break;
 				case 5: //Listar por hobbie
@@ -130,14 +132,11 @@ int menu(int opcion){
 	return opcion;
 }
 
-void menuEliminar(int opcion,int indice,multilista lista){
-	
-}
-
 void menuListarCarrera(int opcion,multilista lista){
 	cout<<endl<<"Seleccione la carrera de la cual desea enlistar las personas:"<<endl<<"1. Sistemas"<<endl<<"2. Catastral"
 	<<endl<<"3. Electronica"<<"4. Industrial"<<endl<<"Opcion: ";
 	cin>>opcion;
+	Persona *persona;
 	persona=lista.listarByHobby(opcion);
 	imprimirCarrera(persona,lista,opcion);
 	
@@ -147,8 +146,9 @@ void menuListarHobbie(int opcion, multilista lista){
 	cout<<endl<<"Seleccione el hobbie del cual desea enlistar las personas:"<<endl<<"1. Natacion"<<endl<<"2. Basket"
 	<<endl<<"3. Danza"<<"4. Baseball"<<endl<<"Opcion: ";
 	cin>>opcion;
-		persona=lista.listarByHobby(opcion);
-		imprimirHobby(persona,lista,opcion);
+	Persona *persona;
+	persona=lista.listarByHobby(opcion);
+	imprimirHobby(persona,lista,opcion);
 }
 void imprimir(Persona *persona,multilista lista,int indice){
 	int i;
