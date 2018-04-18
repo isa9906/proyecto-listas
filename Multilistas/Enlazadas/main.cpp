@@ -35,6 +35,7 @@ using namespace std;
 int main(int argc, char** argv) {
 	int c=1,opcion=-1;
 	while(c!=0){
+		cout<<"NOTA: ESTE PROGRAMA NO ADMITE ESPACIOS EN CADENAS DE CARACTERES; SE DEBE ESCRIBIR POR EJEMPLO: Huevos-pericos";
 		switch(menu(opcion)){
 				case 1: //Agregar receta
 					agregarReceta(opcion);
@@ -85,7 +86,7 @@ void modificarrect(int opcion){
 			break;
 		}
 		else if (i==comida.getTam()){
-			cout<<"No hay una receta con estas especificaciones";
+			cout<<"No hay una receta con estas especificaciones"<<endl;
 			return;		
 		}
 		else {
@@ -123,7 +124,7 @@ void modificarrect(int opcion){
 					break;
 				}
 				else if (j==temprec.ing.getTam()){
-					cout<<"No hay un ingrediente con estas especificaciones";
+					cout<<"No hay un ingrediente con estas especificaciones"<<endl;
 					return;		
 				}
 				else {
@@ -238,7 +239,7 @@ void buscarRecetaByNombre(){
 			}
 			else{
 				if(i+1==comida.getTam()){
-					cout<<"El nombre de receta no coincide con ninguna receta";
+					cout<<"El nombre de receta no coincide con ninguna receta"<<endl;
 					return;
 				}
 			}
@@ -278,7 +279,7 @@ void buscarRecetasByIngrediente(){
 			}
 		}
 		if(arrayRecetas.getTam()==0){
-			cout<<endl<<"No exite ninguna receta con ese ingrediente";
+			cout<<endl<<"No exite ninguna receta con ese ingrediente"<<endl;
 			return;
 		}
 		else{
@@ -324,7 +325,7 @@ void eliminarReceta(){
 			}
 			else{
 				if(i+1==comida.getTam()){
-					cout<<"El nombre de receta no coincide con ninguna receta";
+					cout<<"El nombre de receta no coincide con ninguna receta"<<endl;
 					return;
 				}
 			}
@@ -356,7 +357,7 @@ void eliminarIngrediente(){
 			}
 			else{
 				if(i+1==comida.getTam()){
-					cout<<"El nombre de receta no coincide con ninguna receta";
+					cout<<"El nombre de receta no coincide con ninguna receta"<<endl;
 					return;
 				}
 			}
@@ -374,7 +375,7 @@ void eliminarIngrediente(){
 				}
 				else{
 					if(j+1==rec_.ing.getTam()){
-						cout<<"El nombre del ingrediente no coincide con ninguna receta";
+						cout<<"El nombre del ingrediente no coincide con ninguna receta"<<endl;
 						return;
 					}
 				}
@@ -385,7 +386,7 @@ void eliminarIngrediente(){
 			cout<<endl<<"Ingrediente eliminado"<<endl;
 		}
 		else{
-			cout<<"No hay ingredientes en esta receta";
+			cout<<"No hay ingredientes en esta receta"<<endl;
 		}
 		
 	}
