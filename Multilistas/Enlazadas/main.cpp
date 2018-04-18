@@ -74,12 +74,14 @@ int menu(int opcion){
 
 void modificarrect(int opcion){
 	char *nombrec;
+	nombrec= new char [BUFFER_SIZE];
 	cout<<"Ingrese el nombre de la receta que desea modificar: "<<endl;
 	cin>>nombrec;
 	int i;
 	i=0;
 	while(true){
 		if(strcoll(comida.devolverDato(i).nombre,nombrec)==0){
+			cout<<"RECETA ENCONTRADA"<<endl;
 			break;
 		}
 		else if (i==comida.getTam()){
@@ -93,13 +95,18 @@ void modificarrect(int opcion){
 	receta temprec= comida.devolverDato(i);
 	switch(menuModificarReceta(opcion)){
 		case 1://modifica nombre de la receta
+		
 			char *nombrenuevo;
+			nombrenuevo= new char [BUFFER_SIZE];
+			cout<<"Ingrese nuevo nombre";
 			cin>>nombrenuevo;
 			temprec.nombre=nombrenuevo;
 			comida.modificar(temprec,i);
 			break;
 		case 2://modifica la preparacion de la receta
 			char *preparacionnuevo;
+			preparacionnuevo= new char [BUFFER_SIZE];
+			cout<<"Ingrese nueva preparación: ";
 			cin>>preparacionnuevo;
 			temprec.preparacion=preparacionnuevo;
 			
@@ -107,11 +114,12 @@ void modificarrect(int opcion){
 		case 3://modifica los ingredientes de la receta
 		
 			char *nombreing;
-			cout<<"Ingrese el nombre del ingrediente que desea modificar: "<<endl;
+			nombreing = new char[BUFFER_SIZE];
+			cout<<"Ingrese el nombre del ingrediente que desea modificar: ";
 			cin>>nombreing;
 			int j=0;
 			while(true){
-				if(strcoll(temprec.ing.devolverDato(j).nombre,nombrec)==0){
+				if(strcoll(temprec.ing.devolverDato(j).nombre,nombreing)==0){
 					break;
 				}
 				else if (j==temprec.ing.getTam()){
@@ -125,31 +133,38 @@ void modificarrect(int opcion){
 			ingrediente temping= temprec.ing.devolverDato(j);
 			switch(menuModificarIngrediente(opcion)){
 				case 1:
-					char *nombreing;
-					cin>>nombreing;
-					temping.nombre=nombreing;
+					char *nombreingnuevo;
+					nombreingnuevo=new char [BUFFER_SIZE];
+					cout<<"Ingrese el nuevo nombre del ingrediente: ";
+					cin>>nombreingnuevo;
+					
+					temping.nombre=nombreingnuevo;
 					temprec.ing.modificar(temping,j);
 					break;
 				case 2:
 					float cantidad;
+					cout<<"Ingrese la nueva cantidad del ingrediente: ";
 					cin>>cantidad;
 					temping.cant=cantidad;
 					temprec.ing.modificar(temping,j);
 					break;
 				case 3:
-					char *medida;
-					cin>>medida;
-					temping.medida=medida;
+					char *medidanueva;
+					medidanueva=new char [BUFFER_SIZE];
+					cout<<"Ingrese la nueva medida del ingrediente: ";
+					cin>>medidanueva;
+					temping.medida=medidanueva;
 					temprec.ing.modificar(temping,j);
 					break;
 			}
 			comida.modificar(temprec,i);
 		break;		
 	}
+	cout<<"RECETA MODIFICADA CON EXITO";
 }
 
 int menuModificarReceta(int opcion){
-	cout<<"ï¿½Que desea modificar?"<<endl;
+	cout<<"¿Que desea modificar?"<<endl;
 	cout<<"1. nombre de la receta"<<endl;
 	cout<<"2. preparacion de la receta"<<endl;
 	cout<<"3. algo relacionado a los ingredientes"<<endl;
@@ -158,7 +173,7 @@ int menuModificarReceta(int opcion){
 }
 
 int menuModificarIngrediente(int opcion){
-	cout<<"ï¿½Que desea modificar?"<<endl;
+	cout<<"¿Que desea modificar?"<<endl;
 	cout<<"1. nombre del ingrediente"<<endl;
 	cout<<"2. cantidad"<<endl;
 	cout<<"3. medida"<<endl;
