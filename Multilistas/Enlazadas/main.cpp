@@ -26,14 +26,14 @@ void buscarRecetasByIngrediente();
 void imprimirRecetas(Lista<receta> rec_);
 void eliminarIngrediente();
 void eliminarReceta();
+int menuModificarReceta(int opcion);
+int menuModificarIngrediente(int opcion);
+void modificarrect(int opcion);
 
 using namespace std;
 
 int main(int argc, char** argv) {
-
-	int c=1,opcion=-1,i,numPers=0;
-	
-
+	int c=1,opcion=-1;
 	while(c!=0){
 		switch(menu(opcion)){
 				case 1: //Agregar receta
@@ -42,8 +42,8 @@ int main(int argc, char** argv) {
 				case 2: // Eliminar un receta
 					eliminarReceta();
 				break;
-				case 3: //Modificar
-				
+				case 3: //modificar receta
+					modificarrect(opcion);
 				break;
 				case 4: //Buscar receta por nombre
 					buscarRecetaByNombre();
@@ -71,6 +71,101 @@ int menu(int opcion){
 	cin>>opcion;
 	return opcion;
 }
+
+void modificarrect(int opcion){
+	char *nombrec;
+	cout<<"Ingrese el nombre de la receta que desea modificar: "<<endl;
+	cin>>nombrec;
+	int i;
+	i=0;
+	while(true){
+		if(strcoll(comida.devolverDato(i).nombre,nombrec)==0){
+			break;
+		}
+		else if (i==comida.getTam()){
+			cout<<"No hay una receta con estas especificaciones";
+			return;		
+		}
+		else {
+			i++;
+		}
+	}
+	receta temprec= comida.devolverDato(i);
+	switch(menuModificarReceta(opcion)){
+		case 1://modifica nombre de la receta
+			char *nombrenuevo;
+			cin>>nombrenuevo;
+			temprec.nombre=nombrenuevo;
+			comida.modificar(temprec,i);
+			break;
+		case 2://modifica la preparacion de la receta
+			char *preparacionnuevo;
+			cin>>preparacionnuevo;
+			temprec.preparacion=preparacionnuevo;
+			
+			break;
+		case 3://modifica los ingredientes de la receta
+		
+			char *nombreing;
+			cout<<"Ingrese el nombre del ingrediente que desea modificar: "<<endl;
+			cin>>nombreing;
+			int j=0;
+			while(true){
+				if(strcoll(temprec.ing.devolverDato(j).nombre,nombrec)==0){
+					break;
+				}
+				else if (j==temprec.ing.getTam()){
+					cout<<"No hay un ingrediente con estas especificaciones";
+					return;		
+				}
+				else {
+					j++;
+				}
+			}
+			ingrediente temping= temprec.ing.devolverDato(j);
+			switch(menuModificarIngrediente(opcion)){
+				case 1:
+					char *nombreing;
+					cin>>nombreing;
+					temping.nombre=nombreing;
+					temprec.ing.modificar(temping,j);
+					break;
+				case 2:
+					float cantidad;
+					cin>>cantidad;
+					temping.cant=cantidad;
+					temprec.ing.modificar(temping,j);
+					break;
+				case 3:
+					char *medida;
+					cin>>medida;
+					temping.medida=medida;
+					temprec.ing.modificar(temping,j);
+					break;
+			}
+			comida.modificar(temprec,i);
+		break;		
+	}
+}
+
+int menuModificarReceta(int opcion){
+	cout<<"�Que desea modificar?"<<endl;
+	cout<<"1. nombre de la receta"<<endl;
+	cout<<"2. preparacion de la receta"<<endl;
+	cout<<"3. algo relacionado a los ingredientes"<<endl;
+	cin>>opcion;
+	return opcion;	
+}
+
+int menuModificarIngrediente(int opcion){
+	cout<<"�Que desea modificar?"<<endl;
+	cout<<"1. nombre del ingrediente"<<endl;
+	cout<<"2. cantidad"<<endl;
+	cout<<"3. medida"<<endl;
+	cin>>opcion;
+	return opcion;	
+}
+
 void agregarReceta(int opcion){
 	float cantidad;
 	//Variables
@@ -94,6 +189,7 @@ void agregarReceta(int opcion){
 	}while (opcion!=0);
 	comida.anadir_inicio(rec);
 }
+
 ingrediente agregarIngrediente(){
 	float cantidad;
 	char *nombreing, *medida;
@@ -283,4 +379,3 @@ void eliminarIngrediente(){
 	}
 	
 }
-
