@@ -14,7 +14,7 @@ class Pila{
 		inline void meter(T v){
 			pila[p++] = v;
 		}
-		inline void sacar(){
+		inline T sacar(){
 			return pila[--p];
 		}
 		inline int vacia(){
