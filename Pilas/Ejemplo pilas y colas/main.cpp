@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	}
 	cout<<"mire cuidadosamente los sìmbolos y elija uno\n";
 	
-	for(j=1; j<tam/3; j++){
+	for(j=0; j<tam/3; j++){
 	cout<<"  Gr1  "<<"Gr2  "<<"Gr3  "<<endl;
 	while (!Cola.ColaVacia()){
 		for (i=0; i<3; i++){
@@ -44,6 +44,9 @@ int main(int argc, char *argv[])
 	 
 	cout<< "elija el grupo en el que quedò el sìmbolo elegido (1, 2 o 3): ";
 	cin>> grupo;
+	
+
+	
 	switch(grupo){
 	    case 1 : {orden[0]=1; orden[1]=0; orden[2]=2;break;}
 	    case 2 : {orden[0]=0; orden[1]=1; orden[2]=2;break;}       
@@ -55,8 +58,25 @@ int main(int argc, char *argv[])
 		}
 	    }
 	}
+	if(tam%2==0){
+		switch (grupo){
+		case 1: {
+			j=tam-tam/2;
+			break;
+		}
+		case 2:{
+			j=tam-tam/2;
+			break;
+		}
+		case 3:
+			j=tam-tam/2+1;		
 	
-	j=tam-tam/2;
+		}
+	}
+	else{
+		j=tam-tam/2;
+	}
+	
 	
 	for (i=1; i<=j; i++){
 		x=Cola.AtenderCola();
