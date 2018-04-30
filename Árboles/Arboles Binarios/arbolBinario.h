@@ -1,3 +1,6 @@
+#include "Pila.h"
+#include "Lista.h"
+
 template <class T>
 struct node{
 	T clave;
@@ -66,6 +69,44 @@ class arbolBinario{
 		}
 		
 		Lista<T> recorridoInOrden(){
-			
+			//RECORRIDO EN LA PARTE IZQUIERDA DE LA RAÍZ
+			int actual = raiz;
+			Pila<int> pila;
+			Lista<T> lista;
+			//se meten los nodos en la pila
+			while(arbol[actual].izq!=-1){
+				pila.meter(actual);
+				actual = arbol[actual].izq;
+			}
+			lista.anadir_final(arbol[actual].clave); //se añade el elemento que no tiene izquierda
+			//se imprimen todos los nodos según como esté dada la pila
+			while(!pila.vacia()){
+				actual = pila.sacar();
+				lista.anadir_final(arbol[actual].clave);
+				if(arbol[actual].der!=-1)
+					if(arbol[actual].clave!=arbol[raiz].clave) //se verifica si está en la raíz
+						lista.anadir_final(arbol[arbol[actual].der].clave);
+			}
+			//RECORRIDO EN LA PARTE DERECHA DE LA RAÍZ
+			int rais = arbol[actual].der;
+			while(rais!=-1){
+				///******************///
+				actual = rais;
+				Pila<int> pila;
+				//se meten los nodos en la pila
+				while(arbol[actual].izq!=-1){
+					pila.meter(actual);
+					actual = arbol[actual].izq;
+				}
+				lista.anadir_final(arbol[actual].clave); //se añade el elemento que no tiene izquierda
+				//se imprimen todos los nodos según como esté dada la pila
+				while(!pila.vacia()){
+					actual = pila.sacar();
+					lista.anadir_final(arbol[actual].clave);
+				}
+				///******************///
+				rais = arbol[rais].der;
+			}
+			return lista;
 		}
 };
