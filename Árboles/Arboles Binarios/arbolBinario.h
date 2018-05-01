@@ -1,5 +1,6 @@
 #include "Pila.h"
 #include "Lista.h"
+#include "Cola.h"
 
 template <class T>
 struct node{
@@ -108,5 +109,22 @@ class arbolBinario{
 				rais = arbol[rais].der;
 			}
 			return lista;
+		}
+		Lista<T> recorridoPreOrden(){
+			
+			int actual = raiz;
+			cola<int> cola;
+			Lista<T> lista;
+			//se meten los nodos en la pila
+			while(arbol[actual].izq!=-1){
+				cola.InsCola(actual);
+				actual = arbol[actual].izq;
+			}
+			while(!cola.ColaVacia()){
+				actual=cola.AtenderCola();	
+				lista.anadir_final(arbol[actual].clave);
+				
+			}
+			
 		}
 };
