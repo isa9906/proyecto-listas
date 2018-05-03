@@ -1,10 +1,14 @@
 #include <iostream>
+#include "Pila.h"
+#include "Lista.h"
+
 template <class T>
-struct nodo{
+struct x{
 	T clave;
 	int izq;
 	int der;
 };
+
 using namespace std;
 template <class T>
 
@@ -12,13 +16,13 @@ class arbolBinario {
 	int tama;
 	int i;
 	int indice;
-	nodo <T> *arreglo;
+	x <T> *arreglo;
 	int auxactual=0;
 	int auxrevisado=0;
 	public:
 	arbolBinario (int tam){
 		tama=tam;
-		arreglo= new nodo <T> [tama+1];
+		arreglo= new x <T> [tama+1];
 		indice=0;
 		for(i=0;i<tama;i++){
 			arreglo[i].der=i+1;
@@ -88,7 +92,7 @@ class arbolBinario {
 				arreglo[padre].izq=0;
 			}			
 		}
-		//eliminar nodo con un solo hijo
+		//eliminar x con un solo hijo
 		else if(arreglo[hijo].der==0||arreglo[hijo].izq==0){
 			int hijoaux;
 			if(arreglo[hijo].der!=0){
@@ -161,7 +165,30 @@ class arbolBinario {
 		arreglo[hijo].izq=0;	
 	}
 	
+	Lista<T> *recorridoInOrden(){
+		int node = arreglo[0].izq;
+		Lista<T> *lista = new Lista<T>();
+		inOrden(node,lista);
+		return lista;
+	}
 	
+	void inOrden(int node,Lista<T> *lista){
+		Pila<int> pila;
+		int actual = node;
+		//se meten los nodos en la pila
+		while(actual!=0){
+			pila.meter(actual);
+			actual = arreglo[actual].izq;
+		}
+		//se imprimen todos los nodoss según como esté dada la pila
+		int current;
+		while(!pila.vacia()){
+			current = pila.sacar();
+			lista->anadir_final(arreglo[current].clave);
+			if(arreglo[current].der!=0)
+				inOrden(arreglo[current].der,lista);
+		}
+	}
 	
 	
 	void revisar(){
