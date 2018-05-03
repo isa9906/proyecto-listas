@@ -7,6 +7,7 @@ void imprimir(Lista<T> *lista);
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 using namespace std;
 int main(int argc, char** argv) {
+	Lista<int> *lista;
 	arbolBinario <int> arbol (10);
 	arbol.agregar(100);
 	arbol.agregar(50);
@@ -18,7 +19,12 @@ int main(int argc, char** argv) {
 	cout<<endl;
 	//arbol.revisar();
 	//recorrido in orden
-	Lista<int> *lista = arbol.recorridoInOrden();
+	cout<<"RECORRIDO IN ORDEN"<<endl;
+	lista = arbol.recorridoInOrden();
+	imprimir(lista);
+	//recorrido pre orden
+	cout<<"RECORRIDO PRE ORDEN"<<endl;
+	lista = arbol.recorridoPreOrden();
 	imprimir(lista);
 	return 0;
 }
