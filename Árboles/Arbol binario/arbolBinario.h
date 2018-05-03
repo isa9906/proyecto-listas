@@ -29,7 +29,7 @@ class arbolBinario {
 				pila.meter(actual);
 				actual = arreglo[actual].izq;
 			}
-			//se imprimen todos los nodoss según como esté dada la pila
+			//se imprimen todos los nodoss segÃºn como estÃ© dada la pila
 			int current;
 			while(!pila.vacia()){
 				current = pila.sacar();
@@ -52,6 +52,22 @@ class arbolBinario {
 				current = pila.sacar();
 				if(arreglo[current].der!=0)
 					preOrden(arreglo[current].der,lista);
+			}
+		}
+		
+		void posOrden(int node,Lista<T> *lista){
+			int actual = node;
+			Pila<int> pila;
+			while(actual!=0){
+				pila.meter(actual);
+				actual = arreglo[actual].izq;
+			}
+			int current;
+			while(!pila.vacia()){
+				current = pila.sacar();
+				if(arreglo[current].der!=0)
+					posOrden(arreglo[current].der,lista);
+				lista->anadir_final(arreglo[current].clave);
 			}
 		}
 		
@@ -218,22 +234,6 @@ class arbolBinario {
 			Lista<T> *lista = new Lista<T>();
 			posOrden(node,lista);
 			return lista;
-		}
-		
-		void posOrden(int node,Lista<T> *lista){
-			int actual = node;
-			Pila<int> pila;
-			while(actual!=0){
-				pila.meter(actual);
-				actual = arreglo[actual].izq;
-			}
-			int current;
-			while(!pila.vacia()){
-				current = pila.sacar();
-				if(arreglo[current].der!=0)
-					posOrden(arreglo[current].der,lista);
-				lista->anadir_final(arreglo[current].clave);
-			}
 		}
 		
 		void revisar(){
