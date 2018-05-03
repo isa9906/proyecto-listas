@@ -8,16 +8,32 @@ void imprimir(Lista<T> *lista);
 using namespace std;
 int main(int argc, char** argv) {
 	Lista<int> *lista;
-	arbolBinario <int> arbol (10);
-	arbol.agregar(100);
+	arbolBinario <int> arbol (15);
+	
+	/*arbol.agregar(100);
 	arbol.agregar(50);
 	arbol.agregar(25);
 	arbol.agregar(150);
 	arbol.agregar(30);
-	//arbol.revisar();
+	arbol.revisar();
 	arbol.eliminar(100);
 	cout<<endl;
-	//arbol.revisar();
+	arbol.revisar();*/
+	
+	arbol.agregar(100);
+	arbol.agregar(150);
+	arbol.agregar(50);
+	arbol.agregar(30);
+	arbol.agregar(75);
+	arbol.agregar(125);
+	arbol.agregar(170);
+	arbol.agregar(10);
+	arbol.agregar(60);
+	arbol.agregar(90);
+	arbol.agregar(180);
+	arbol.agregar(140);
+	arbol.agregar(160);
+	
 	//recorrido in orden
 	cout<<"RECORRIDO IN ORDEN"<<endl;
 	lista = arbol.recorridoInOrden();
@@ -25,6 +41,10 @@ int main(int argc, char** argv) {
 	//recorrido pre orden
 	cout<<"RECORRIDO PRE ORDEN"<<endl;
 	lista = arbol.recorridoPreOrden();
+	imprimir(lista);
+	//recorrido pos orden
+	cout<<"RECORRIDO POS ORDEN"<<endl;
+	lista = arbol.recorridoPosOrden();
 	imprimir(lista);
 	return 0;
 }

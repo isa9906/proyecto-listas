@@ -213,6 +213,29 @@ class arbolBinario {
 			return lista;
 		}
 		
+		Lista<T> *recorridoPosOrden(){
+			int node = arreglo[0].izq;
+			Lista<T> *lista = new Lista<T>();
+			posOrden(node,lista);
+			return lista;
+		}
+		
+		void posOrden(int node,Lista<T> *lista){
+			int actual = node;
+			Pila<int> pila;
+			while(actual!=0){
+				pila.meter(actual);
+				actual = arreglo[actual].izq;
+			}
+			int current;
+			while(!pila.vacia()){
+				current = pila.sacar();
+				if(arreglo[current].der!=0)
+					posOrden(arreglo[current].der,lista);
+				lista->anadir_final(arreglo[current].clave);
+			}
+		}
+		
 		void revisar(){
 			for(int i; i<=tama;i++){
 				cout<<arreglo[i].clave<<" ";
