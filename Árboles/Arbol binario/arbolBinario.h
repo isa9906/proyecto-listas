@@ -119,6 +119,20 @@ class arbolBinario {
 				indice++;		
 			}		
 		}
+		
+		bool arbolLleno(){
+			if(indice==tama){
+				return true;
+			}
+			return false;
+		}
+		
+		bool arbolVacio(){
+			if(indice==0){
+				return true;
+			}
+			return false;
+		}
 		void eliminar(T valor){
 			int padre=0;
 			int hijo=arreglo[0].izq;
@@ -212,7 +226,8 @@ class arbolBinario {
 			arreglo[hijo].der=arreglo[0].der;
 			arreglo[0].der=hijo;
 			arreglo[hijo].clave=0;
-			arreglo[hijo].izq=0;	
+			arreglo[hijo].izq=0;
+			indice--;	
 		}
 		
 		Lista<T> *recorridoInOrden(){
