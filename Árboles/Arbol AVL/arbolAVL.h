@@ -20,7 +20,7 @@ class arbolAVL {
 		x <T> *arreglo;
 		int auxactual=0;
 		int auxrevisado=0;
-		
+		//Recorrido in orden del arbol
 		void inOrden(int node,Lista<T> *lista){
 			Pila<int> pila;
 			int actual = node;
@@ -29,7 +29,7 @@ class arbolAVL {
 				pila.meter(actual);
 				actual = arreglo[actual].izq;
 			}
-			//se imprimen todos los nodoss seg√∫n como est√© dada la pila
+			//se imprimen todos los nodoss segun como este dada la pila
 			int current;
 			while(!pila.vacia()){
 				current = pila.sacar();
@@ -38,7 +38,7 @@ class arbolAVL {
 					inOrden(arreglo[current].der,lista);
 			}
 		}
-		
+		//Recorrido pre orden del arbol
 		void preOrden(int node,Lista<T> *lista){
 			int actual = node;
 			Pila<int> pila;
@@ -54,7 +54,7 @@ class arbolAVL {
 					preOrden(arreglo[current].der,lista);
 			}
 		}
-		
+		//Recorrido pos orden del arbol
 		void posOrden(int node,Lista<T> *lista){
 			int actual = node;
 			Pila<int> pila;
@@ -70,8 +70,174 @@ class arbolAVL {
 				lista->anadir_final(arreglo[current].clave);
 			}
 		}
+		//Rotacion sencilla de uno nodo a la izquierda
+		void rotacionSencillaIzquierda(int abuelo,int padre, int hijoDerecho){
+			int nieto;
+			nieto = arreglo[hijoDerecho].izq;
+			arreglo[hijoDerecho].izq = padre;
+			arreglo[padre].der = nieto;
+			if(abuelo!=0){
+				if(arreglo[abuelo].izq==padre){
+					arreglo[abuelo].izq = hijoDerecho;
+				}
+				else{
+					arreglo[abuelo].der = hijoDerecho;
+				}
+			}
+			//se verifica si est· en la raiz
+			if(arreglo[0].izq==padre){
+				arreglo[0].izq=hijoDerecho;
+			}
+		}
+		//Rotacion sencilla de un nodo a la derecha
+		void rotacionSencillaDerecha(int abuelo,int padre, int hijoIzquierdo){
+			int nieto;
+			nieto = arreglo[hijoIzquierdo].der;
+			arreglo[hijoIzquierdo].der = padre;
+			arreglo[padre].izq = nieto;
+			if(abuelo!=0){
+				if(arreglo[abuelo].izq==padre){
+					arreglo[abuelo].izq = hijoIzquierdo;
+				}
+				else{
+					arreglo[abuelo].der = hijoIzquierdo;
+				}
+			}
+			//se verifica si est· en la raiz
+			if(arreglo[0].izq==padre){
+				arreglo[0].izq=hijoIzquierdo;
+			}
+		}
+		//Rotacion de un nodo
+		void rotacion(int abuelo,int padre){
+			int desequi = desequilibrio(arreglo[padre]);
+			//desequilibrio positivo (rotacion a la izquierda)
+			if(desequi>0){
+				int hijoDerecho = arreglo[padre].der;
+				int desHijoDerecho = desequilibrio(arreglo[hijoDerecho]);
+				//rotacion sencilla hacia la izquierda
+				if(desHijoDerecho>=0){
+					rotacionSencillaIzquierda(abuelo,padre,hijoDerecho);
+				}
+				//rotacion doble hacia la izquierda
+				else if(desHijoDerecho<0){
+					//rotacion sencilla del hijo a la derecha
+					rotacionSencillaDerecha(padre,hijoDerecho,arreglo[hijoDerecho].izq);
+					//rotacion sencilla del padre a la izquierda
+					rotacionSencillaIzquierda(abuelo,padre,arreglo[padre].der);
+				}
+			}
+			//desequilibrio negativo (rotacion a la derecha)
+			else{
+				int hijoIzquierdo = arreglo[padre].izq;
+				int desHijoIzquierdo = desequilibrio(arreglo[hijoIzquierdo]);
+				//rotacion doble hacia la derecha
+				if(desHijoIzquierdo>0){
+					//rotacion sencilla del hijo a la izquierda
+					rotacionSencillaIzquierda(padre,hijoIzquierdo,arreglo[hijoIzquierdo].der);
+					//rotacion sencilla del padre a la derecha
+					rotacionSencillaDerecha(abuelo,padre,arreglo[padre].izq);
+				}
+				//rotacion sencilla hacia la derecha
+				else if(desHijoIzquierdo<=0){
+					rotacionSencillaDerecha(abuelo,padre,hijoIzquierdo);
+				}		
+			}
+		}
+		//Se da equilibrio al arbol
+		void equilibrar(T valor){
+			/*se hace el recorrido hasta el valor recientemente agregado o eliminado para ir mirando si algun nodo a lo largo de ese recorrido
+			se ha desequilibrado*/
+			int padre,hijo;
+			padre = 0;
+			hijo = arreglo[0].izq; //raiz
+			while(hijo!=0){
+				//si el nodo est· desequilibrado
+				if(esta_desequilibrado(arreglo[hijo])){
+					rotacion(padre,hijo);
+					hijo = 0;
+				}
+				//si no est· desequilibrado, se mira el siguiente nodo en el recorrido
+				else{
+					padre = hijo;
+					//si el nodo que se examino tiene la clave que se ingreso, se termina el algoritmo
+					if(arreglo[hijo].clave==valor){
+						hijo = 0;
+					}
+					//si el valor es menor que la clave del nodo, se va a la izquierda
+					else if(valor<arreglo[hijo].clave){
+						hijo = arreglo[padre].izq;
+					}
+					//si el valor es mayor que la clave del nodo, se va a la derecha
+					else{
+						hijo = arreglo[padre].der;
+					}
+				}
+			}
+		}
+		//funcion recursiva para calcular la altura de un nodo
+		int altura(x <T> este){
+			if(este.izq==0&&este.der==0){
+				return 0;
+			}
+			else{
+				int altder;
+				int altizq;
+				if(este.der==0||este.izq==0){
+					if(este.der==0&&este.izq!=0){
+						return altura(arreglo[este.izq])+1;
+					}
+					else if(este.izq==0&&este.der!=0){
+						return altura(arreglo[este.der])+1;
+					}		
+				}
+				else {
+					altder=altura(arreglo[este.der]);
+					altizq=altura(arreglo[este.izq]);
+					if(altizq>altder){
+						return altizq+1;
+					}
+					else{
+						return altder+1;
+					}			
+				}			
+			}
+		}
+		//funcion para el desequilibrio
+		int desequilibrio(x <T> dato){
+				if(dato.der==0&&dato.izq==0){
+					return 0;
+				}
+				//se le aumenta 1 para contar el nodo donde est· ubicado
+				else{
+					if(dato.der==0&&dato.izq!=0){
+					
+						return 0-(altura(arreglo[dato.izq])+1);
+					}
+					else if(dato.izq==0&&dato.der!=0){
+						return (altura(arreglo[dato.der])+1);
+					}
+					else {
+						int altder;
+						int altizq;
+						altder=altura(arreglo[dato.der])+1;
+						altizq=altura(arreglo[dato.izq])+1;
+						return altder-altizq;			
+					}
+			}
+		}
+		//funcion para determinar si esta o no desequilibrado
+		bool esta_desequilibrado(x <T> dato){
+			if (desequilibrio(dato)<-1||desequilibrio(dato)>1){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}	
 		
 	public:
+		//Constructor
 		arbolAVL (int tam){
 			tama=tam;
 			arreglo= new x <T> [tama+1];
@@ -81,6 +247,7 @@ class arbolAVL {
 			}
 			arreglo[tam].der=0;				
 		}
+		//Agregar un valor al arbol
 		void agregar(T valor){
 			auxactual=arreglo[0].der;
 			arreglo[auxactual].clave=valor;
@@ -116,22 +283,10 @@ class arbolAVL {
 					}	
 				}		
 			}
-			indice++;		
+			indice++;
+			equilibrar(valor); //se equilibra el arbol si es necesario		
 		}
-		
-		bool arbolLleno(){
-			if(indice==tama){
-				return true;
-			}
-			return false;
-		}
-		
-		bool arbolVacio(){
-			if(indice==0){
-				return true;
-			}
-			return false;
-		}
+		//Eliminacion de un nodo del arbol
 		void eliminar(T valor){
 			int padre=0;
 			int hijo=arreglo[0].izq;
@@ -226,101 +381,54 @@ class arbolAVL {
 			arreglo[0].der=hijo;
 			arreglo[hijo].clave=0;
 			arreglo[hijo].izq=0;
-			indice--;	
+			indice--;
+			equilibrar(valor); //se equilibra el arbol si es necesario	
 		}
-		
+		//Revisa si el arbol se encuentra lleno
+		bool arbolLleno(){
+			if(indice==tama){
+				return true;
+			}
+			return false;
+		}
+		//Revisa si el arbol se encuentra vacio
+		bool arbolVacio(){
+			if(indice==0){
+				return true;
+			}
+			return false;
+		}
+		//Retorna una lista con el recorrido in orden del arbol
 		Lista<T> *recorridoInOrden(){
 			int node = arreglo[0].izq;
 			Lista<T> *lista = new Lista<T>();
 			inOrden(node,lista);
 			return lista;
 		}
-		
+		//Retorna una lista con el recorrido pre orden del arbol
 		Lista<T> *recorridoPreOrden(){
 			int node = arreglo[0].izq;
 			Lista<T> *lista = new Lista<T>();
 			preOrden(node,lista);
 			return lista;
 		}
-		
+		//Retorna una lista con el recorrido pos orden del arbol
 		Lista<T> *recorridoPosOrden(){
 			int node = arreglo[0].izq;
 			Lista<T> *lista = new Lista<T>();
 			posOrden(node,lista);
 			return lista;
 		}
-		
-	void revisar(){
+		void revisar(){
 		//comienza desde uno hasta el indice ya que son los unicos a los que se les debe calcular el desequilibrio
+			cout<<"Raiz "<<arreglo[0].izq<<endl;
 			for(int i=1; i<=indice;i++){
+				cout<<"NODO: ";
 				cout<<arreglo[i].clave<<" ";
 				cout<<arreglo[i].izq<<" ";
 				cout<<arreglo[i].der<<endl;
-				cout<<desequilibrio(arreglo[i])<<endl;
+				cout<<"Desequilibrio: "<<desequilibrio(arreglo[i])<<endl;
 			}
 		}
-		//funcion recursiva para calcular la altura de un nodo
-		int altura(x <T> este){
-			if(este.izq==0&&este.der==0){
-				return 0;
-			}
-			else{
-				int altder;
-				int altizq;
-				if(este.der==0||este.izq==0){
-					if(este.der==0&&este.izq!=0){
-						return altura(arreglo[este.izq])+1;
-					}
-					else if(este.izq==0&&este.der!=0){
-						return altura(arreglo[este.der])+1;
-					}		
-				}
-				else {
-					altder=altura(arreglo[este.der]);
-					altizq=altura(arreglo[este.izq]);
-					if(altizq>altder){
-						return altizq+1;
-					}
-					else{
-						return altder+1;
-					}			
-				}			
-			}
-		}
-		//funcion para el desequilibrio
-		int desequilibrio(x <T> dato){
-				
-				if(dato.der==0&&dato.izq==0){
-					return 0;
-				}
-				//se le aumenta 1 para contar el nodo donde est· ubicado
-				else{
-				
-					if(dato.der==0&&dato.izq!=0){
-					
-						return 0-(altura(arreglo[dato.izq])+1);
-					}
-				
-					else if(dato.izq==0&&dato.der!=0){
-						return (altura(arreglo[dato.der])+1);
-					}
-					else {
-						int altder;
-						int altizq;
-						altder=altura(arreglo[dato.der])+1;
-						altizq=altura(arreglo[dato.izq])+1;
-						return altder-altizq;			
-					}
-					
-			}
-		}
-		//funcion para determinar si esta o no desequilibrado
-		bool esta_desequilibrado(x <T> dato){
-			if (desequilibrio(dato)<-1||desequilibrio(dato)>1){
-				return true;
-			}
-			else{
-				return false;
-			}
-		}	
+		
 };

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "arbolBinario.h"
+#include <windows.h>
 
 template <class T>
 void imprimir(Lista<T> *lista);
@@ -13,6 +14,7 @@ int main(int argc, char** argv) {
 	cin>>max;
 	arbolBinario <int> arbol (max);
 	while(c!=0){
+		system("cls");
 		//menu
 		cout<<endl<<"1. Insertar un elemento"<<endl<<"2. Eliminar un elemento"<<endl<<"3. Recorrido in orden"<<endl<<"4. Recorrido pre orden"<<endl<<"5. Recorrido pos orden"<<endl<<"Opcion: ";
 		cin>>opcion;
