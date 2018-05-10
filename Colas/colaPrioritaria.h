@@ -1,3 +1,5 @@
+#ifndef COLA_P
+#define COLA_P
 #include <string>
 #include <iostream>
 using namespace std;
@@ -111,4 +113,4 @@ class colaPrioritaria {
 			}
 		}	
 };
-
+#endif

@@ -238,7 +238,7 @@ class arbolAVL {
 		
 	public:
 		//Constructor
-		arbolAVL (int tam){
+		arbolAVL (int tam=500){
 			tama=tam;
 			arreglo= new x <T> [tama+1];
 			indice=0;
